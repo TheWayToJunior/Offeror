@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Offeror.LinkedInApi", "Offeror.LinkedInApi\Offeror.LinkedInApi.csproj", "{F983AC55-6E16-4DAA-8040-A5B4F1043D6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Offeror.LinkedInApi", "Offeror.LinkedInApi\Offeror.LinkedInApi.csproj", "{F983AC55-6E16-4DAA-8040-A5B4F1043D6C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Offeror.LinkedInApi.Domain", "Offer.LinkedInApi.Domain\Offeror.LinkedInApi.Domain.csproj", "{B43B0FA9-774A-4729-9AC3-34A485D90A3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Offeror.LinkedInApi.Infrastructure", "Offer.LinkedInApi.Infrastructure\Offeror.LinkedInApi.Infrastructure.csproj", "{B9F2329C-7A63-4937-8E22-9D03273A5EEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Offeror.LinkedInApi.Shared", "Offeror.LinkedInApi.Shared\Offeror.LinkedInApi.Shared.csproj", "{A752BBE6-3603-41A6-ABA7-43B94C970AE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{F983AC55-6E16-4DAA-8040-A5B4F1043D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F983AC55-6E16-4DAA-8040-A5B4F1043D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F983AC55-6E16-4DAA-8040-A5B4F1043D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43B0FA9-774A-4729-9AC3-34A485D90A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43B0FA9-774A-4729-9AC3-34A485D90A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43B0FA9-774A-4729-9AC3-34A485D90A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43B0FA9-774A-4729-9AC3-34A485D90A3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F2329C-7A63-4937-8E22-9D03273A5EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F2329C-7A63-4937-8E22-9D03273A5EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F2329C-7A63-4937-8E22-9D03273A5EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F2329C-7A63-4937-8E22-9D03273A5EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A752BBE6-3603-41A6-ABA7-43B94C970AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A752BBE6-3603-41A6-ABA7-43B94C970AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A752BBE6-3603-41A6-ABA7-43B94C970AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A752BBE6-3603-41A6-ABA7-43B94C970AE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
