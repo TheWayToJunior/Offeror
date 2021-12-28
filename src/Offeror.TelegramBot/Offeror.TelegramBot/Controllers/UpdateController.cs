@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Offeror.TelegramBot.Commands;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Controllers
@@ -8,11 +9,11 @@ namespace Offeror.TelegramBot.Controllers
     [Route("bot/telegram/[controller]")]
     public class UpdateController : ControllerBase
     {
-        private readonly CommandExecutor _commandExecutor;
+        private readonly ICommandExecutor _commandExecutor;
 
-        public UpdateController(CommandExecutor commandExecutor)
+        public UpdateController(ICommandExecutor commandExecutor, TelegramBotClient client)
         {
-            _commandExecutor = commandExecutor;
+            _commandExecutor = new ExecutorExceprionHandler(commandExecutor, client);
         }
 
         [HttpPost]

@@ -1,24 +1,25 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
+﻿using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace Offeror.TelegramBot.Commands
 {
-    public sealed class CommandExecutor
+    public interface ICommandExecutor
     {
-        private readonly TelegramBotClient _telegramBot;
+        Task ExecuteAsync(Update update);
+    }
+
+    public sealed class CommandExecutor : ICommandExecutor
+    {
         private readonly IDictionary<string, IBotCommand> _commands;
 
-        public static IBotCommand? CurrentCommand { get; set; }
+        public IBotCommand? CurrentCommand { get; private set; }
 
-        public CommandExecutor(TelegramBotClient telegramBot)
+        public CommandExecutor(IServiceProvider provider)
         {
             _commands = new Dictionary<string, IBotCommand>()
             {
-                { Commands.StartCommand, new StartCommand(telegramBot) }
+                { Commands.StartCommand, new StartCommand(provider) },
             };
-
-            _telegramBot = telegramBot;
         }
 
         public async Task ExecuteAsync(Update update)
@@ -30,7 +31,8 @@ namespace Offeror.TelegramBot.Commands
                 await SetBotCommandAsync(update);
             }
 
-            await (CurrentCommand?.InvokeAsync(update) ?? SendErrorMessageAsync(update, "First you need to specify the command"));
+            await (CurrentCommand?.InvokeAsync(update)
+                ?? throw new InvalidOperationException("First you need to specify the command"));
         }
 
         private async Task SetBotCommandAsync(Update update)
@@ -39,29 +41,21 @@ namespace Offeror.TelegramBot.Commands
 
             if (string.IsNullOrWhiteSpace(commandKey) || !_commands.ContainsKey(commandKey))
             {
-                await SendErrorMessageAsync(update, "The specified command does not exist");
+                throw new InvalidOperationException("The specified command does not exist");
+            }
+
+            if (CurrentCommand?.CommandName == commandKey)
+            {
+                await CurrentCommand.Complete(update.Message.Chat.Id); 
                 return;
             }
 
-            if (!CurrentCommand?.IsCompleted ?? false)
-            {
-                await SendErrorMessageAsync(update, "Finish the previous command first");
-                return;
-            }
+            //if (!CurrentCommand?.IsCompleted ?? false)
+            //{
+            //    throw new InvalidOperationException("Finish the previous command first");
+            //}
 
             CurrentCommand = _commands[commandKey];
-        }
-
-        private async Task SendErrorMessageAsync(Update update, string message)
-        {
-            long? chatId = update?.Message?.Chat.Id;
-
-            if(chatId is null)
-            {
-                throw new InvalidOperationException("Сhat id not specified");
-            }
-
-            await _telegramBot.SendTextMessageAsync(chatId, message);
         }
     }
 }
