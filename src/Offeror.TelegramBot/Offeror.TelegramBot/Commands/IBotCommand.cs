@@ -10,7 +10,7 @@ namespace Offeror.TelegramBot.Commands
 
         IState UpdateState(IState state);
 
-        IState Restart(long chatId);
+        IState Restart();
 
         Task InvokeAsync(Update update);
     }

@@ -57,7 +57,7 @@ namespace Offeror.TelegramBot.Commands
 
             if (currentCommand?.CommandName == commandKey)
             {
-                currentCommand.Restart(chatId); 
+                currentCommand.Restart(); 
                 return;
             }
 

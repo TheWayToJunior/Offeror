@@ -12,7 +12,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             IState nextState = (update?.Message?.Text) switch
             {
                 Buttons.Next => states.GetState<DisplaySearchState>(),
-                Buttons.Restart => command.Restart(chatId.Value),
+                Buttons.Restart => command.Restart(),
 
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };

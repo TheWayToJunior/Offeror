@@ -25,7 +25,7 @@ namespace Offeror.TelegramBot.Commands
             return CommandState = state;
         }
 
-        public IState Restart(long chatId)
+        public IState Restart()
         {
             IsCompleted = true;
             return UpdateState(_defuildState);
