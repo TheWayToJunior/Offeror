@@ -13,5 +13,9 @@
         public const string Russia = "Russia";
 
         public const string Ukraine = "Ukraine";
+
+        public const string Next = "Next";
+
+        public const string Stop = "Stop";
     }
 }

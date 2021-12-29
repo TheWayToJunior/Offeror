@@ -1,6 +1,4 @@
-﻿using Telegram.Bot;
-
-namespace Offeror.TelegramBot.Middleware
+﻿namespace Offeror.TelegramBot.Middleware
 {
     public class ExceptionHandlerMiddleware
     {
@@ -26,7 +24,8 @@ namespace Offeror.TelegramBot.Middleware
         private Task HandleException(HttpContext context, Exception ex)
         {
             /// TODO : Add Logging
-            
+            Console.WriteLine(ex.Message);
+
             return Task.CompletedTask;
         }
     }

@@ -35,7 +35,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await _client.SendTextMessageAsync(chatId, "Please indicate which status suits you",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.SetState(chatId.Value, ((IStateContainer)command).GetState<SetProfileState>());
+            command.UpdateState(chatId.Value, ((IStateContainer)command).GetState<SetProfileState>());
         }
     }
 }

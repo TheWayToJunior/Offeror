@@ -5,18 +5,28 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class SearchState : IState
+    public class DisplaySearchState : IState
     {
         private readonly TelegramBotClient _client;
 
         /// TODO: Fix this
         private readonly SearchFilter filter;
 
-        public SearchState(TelegramBotClient client, SearchFilter filter)
+        public DisplaySearchState(TelegramBotClient client, SearchFilter filter)
         {
             _client = client;
             this.filter = filter;
         }
+
+        private static ReplyKeyboardMarkup ReplyKeyboardMarkup =>
+            new(
+                new[]
+                {
+                    new KeyboardButton[] { Buttons.Next, Buttons.Stop },
+                })
+            {
+                ResizeKeyboard = true
+            };
 
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
@@ -27,8 +37,11 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 throw new ArgumentNullException(nameof(chatId));
             }
 
+            /// TODO: Generate a message with a job search response
             await _client.SendTextMessageAsync(chatId, $"{filter.Status} {filter.Region}",
-                replyMarkup: new ReplyKeyboardRemove());
+                replyMarkup: ReplyKeyboardMarkup);
+
+            command.UpdateState(chatId.Value, ((IStateContainer)command).GetState<SetSearchState>());
         }
     }
 }

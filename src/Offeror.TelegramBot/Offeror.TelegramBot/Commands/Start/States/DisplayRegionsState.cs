@@ -32,10 +32,10 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 throw new ArgumentNullException(nameof(chatId));
             }
 
-            await _client.SendTextMessageAsync(chatId, "Specify your status",
+            await _client.SendTextMessageAsync(chatId, "Specify the region to search for",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.SetState(chatId.Value, ((IStateContainer)command).GetState<SetRegionState>());
+            command.UpdateState(chatId.Value, ((IStateContainer)command).GetState<SetRegionState>());
         }
     }
 }

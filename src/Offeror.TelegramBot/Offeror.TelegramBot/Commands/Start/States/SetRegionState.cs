@@ -26,9 +26,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
             };
 
             long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
-            IState nextState = states.GetState<SearchState>();
+            IState nextState = states.GetState<DisplaySearchState>();
 
-            await command.SetState(chatId.Value, nextState)
+            await command.UpdateState(chatId.Value, nextState)
                 .ExecuteAsync(command, update);
         }
     }

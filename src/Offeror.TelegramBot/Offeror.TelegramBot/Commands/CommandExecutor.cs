@@ -28,15 +28,16 @@ namespace Offeror.TelegramBot.Commands
 
             if (command is not null)
             {
-                await SetBotCommandAsync(update);
+                SetBotCommand(update);
             }
 
             await (CurrentCommand?.InvokeAsync(update)
                 ?? throw new InvalidOperationException("First you need to specify the command"));
         }
 
-        private async Task SetBotCommandAsync(Update update)
+        private void SetBotCommand(Update update)
         {
+            long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
             string? commandKey = update.Message?.Text;
 
             if (string.IsNullOrWhiteSpace(commandKey) || !_commands.ContainsKey(commandKey))
@@ -46,14 +47,9 @@ namespace Offeror.TelegramBot.Commands
 
             if (CurrentCommand?.CommandName == commandKey)
             {
-                await CurrentCommand.Complete(update.Message.Chat.Id); 
+                CurrentCommand.Restart(chatId.Value); 
                 return;
             }
-
-            //if (!CurrentCommand?.IsCompleted ?? false)
-            //{
-            //    throw new InvalidOperationException("Finish the previous command first");
-            //}
 
             CurrentCommand = _commands[commandKey];
         }

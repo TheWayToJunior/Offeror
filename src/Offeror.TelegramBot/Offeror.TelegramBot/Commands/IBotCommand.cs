@@ -8,9 +8,9 @@ namespace Offeror.TelegramBot.Commands
 
         bool IsCompleted { get; }
 
-        IState SetState(long chatId, IState state);
+        IState UpdateState(long chatId, IState state);
 
-        Task Complete(long chatId);
+        IState Restart(long chatId);
 
         Task InvokeAsync(Update update);
     }

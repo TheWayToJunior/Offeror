@@ -23,17 +23,15 @@ namespace Offeror.TelegramBot.Commands
 
         public bool IsCompleted { get; private set; }
 
-        public IState SetState(long chatId, IState state)
+        public IState UpdateState(long chatId, IState state)
         {
             return _usersStates.AddOrUpdate(chatId, state, (key, oldValue) => state);
         }
 
-        public Task Complete(long chatId)
+        public IState Restart(long chatId)
         {
-            SetState(chatId, _defuildState);
             IsCompleted = true;
-
-            return Task.CompletedTask;
+            return UpdateState(chatId, _defuildState);
         }
 
         public async Task InvokeAsync(Update update)
@@ -42,7 +40,7 @@ namespace Offeror.TelegramBot.Commands
 
             if(!_usersStates.TryGetValue(chatId.Value, out IState? state))
             {
-                state = SetState(chatId.Value, _defuildState);
+                state = UpdateState(chatId.Value, _defuildState);
             }
 
             await state.ExecuteAsync(this, update);
