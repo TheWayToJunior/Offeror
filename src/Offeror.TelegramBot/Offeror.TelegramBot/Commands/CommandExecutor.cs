@@ -1,4 +1,6 @@
-﻿using Telegram.Bot.Types;
+﻿using Offeror.TelegramBot.Extensions;
+using System.Collections.Concurrent;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace Offeror.TelegramBot.Commands
@@ -10,17 +12,21 @@ namespace Offeror.TelegramBot.Commands
 
     public sealed class CommandExecutor : ICommandExecutor
     {
-        private readonly IDictionary<string, IBotCommand> _commands;
+        private readonly IDictionary<string, Func<IBotCommand>> _commands;
 
-        public IBotCommand? CurrentCommand { get; private set; }
+        private readonly ConcurrentDictionary<long, IBotCommand> _usersCommands;
 
         public CommandExecutor(IServiceProvider provider)
         {
-            _commands = new Dictionary<string, IBotCommand>()
+            _commands = new Dictionary<string, Func<IBotCommand>>()
             {
-                { Commands.StartCommand, new StartCommand(provider) },
+                { Commands.StartCommand, () => new StartCommand(provider) },
             };
+
+            _usersCommands = new();
         }
+
+        private IBotCommand? GetUserCommand(long chatId) => _usersCommands.GetValueOrDefault(chatId);
 
         public async Task ExecuteAsync(Update update)
         {
@@ -31,13 +37,14 @@ namespace Offeror.TelegramBot.Commands
                 SetBotCommand(update);
             }
 
-            await (CurrentCommand?.InvokeAsync(update)
-                ?? throw new InvalidOperationException("First you need to specify the command"));
+            var botCommand = GetUserCommand(update.GetChatId());
+
+            await (botCommand?.InvokeAsync(update)
+                ?? throw new InvalidOperationException($"The command execution time is up. Please enter the command again"));
         }
 
         private void SetBotCommand(Update update)
         {
-            long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
             string? commandKey = update.Message?.Text;
 
             if (string.IsNullOrWhiteSpace(commandKey) || !_commands.ContainsKey(commandKey))
@@ -45,13 +52,17 @@ namespace Offeror.TelegramBot.Commands
                 throw new InvalidOperationException("The specified command does not exist");
             }
 
-            if (CurrentCommand?.CommandName == commandKey)
+            long chatId = update.GetChatId();
+            var currentCommand = GetUserCommand(chatId);
+
+            if (currentCommand?.CommandName == commandKey)
             {
-                CurrentCommand.Restart(chatId.Value); 
+                currentCommand.Restart(chatId); 
                 return;
             }
 
-            CurrentCommand = _commands[commandKey];
+            var newCommand = _commands[commandKey].Invoke();
+            _usersCommands.AddOrUpdate(chatId, newCommand, (id, oldCommand) => newCommand);
         }
     }
 }

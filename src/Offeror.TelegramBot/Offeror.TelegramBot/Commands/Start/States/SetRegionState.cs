@@ -25,11 +25,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
-            long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
             IState nextState = states.GetState<DisplaySearchState>();
 
-            await command.UpdateState(chatId.Value, nextState)
-                .ExecuteAsync(command, update);
+            await command.UpdateState(nextState).ExecuteAsync(command, update);
         }
     }
 }

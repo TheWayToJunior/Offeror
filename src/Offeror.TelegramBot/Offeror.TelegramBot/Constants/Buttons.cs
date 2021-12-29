@@ -16,6 +16,6 @@
 
         public const string Next = "Next";
 
-        public const string Stop = "Stop";
+        public const string Restart = "Restart";
     }
 }

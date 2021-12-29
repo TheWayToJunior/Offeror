@@ -12,14 +12,14 @@ namespace Offeror.TelegramBot.Commands.Start.States
             IState nextState = (update?.Message?.Text) switch
             {
                 Buttons.Next => states.GetState<DisplaySearchState>(),
-                Buttons.Stop => command.Restart(chatId.Value),
+                Buttons.Restart => command.Restart(chatId.Value),
 
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
             if(nextState is DisplayRegionsState)
             {
-                command.UpdateState(chatId.Value, nextState);
+                command.UpdateState(nextState);
             }
 
             await nextState.ExecuteAsync(command, update);

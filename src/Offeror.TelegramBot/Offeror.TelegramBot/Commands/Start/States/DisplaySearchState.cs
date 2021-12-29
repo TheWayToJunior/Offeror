@@ -1,4 +1,5 @@
-﻿using Offeror.TelegramBot.Models;
+﻿using Offeror.TelegramBot.Extensions;
+using Offeror.TelegramBot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -22,7 +23,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             new(
                 new[]
                 {
-                    new KeyboardButton[] { Buttons.Next, Buttons.Stop },
+                    new KeyboardButton[] { Buttons.Next, Buttons.Restart },
                 })
             {
                 ResizeKeyboard = true
@@ -30,18 +31,13 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
-            long? chatId = update?.Message?.Chat.Id;
-
-            if (chatId is null)
-            {
-                throw new ArgumentNullException(nameof(chatId));
-            }
+            long chatId = update.GetChatId();
 
             /// TODO: Generate a message with a job search response
             await _client.SendTextMessageAsync(chatId, $"{filter.Status} {filter.Region}",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(chatId.Value, ((IStateContainer)command).GetState<SetSearchState>());
+            command.UpdateState(((IStateContainer)command).GetState<SetSearchState>());
         }
     }
 }

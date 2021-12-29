@@ -31,7 +31,7 @@ namespace Offeror.TelegramBot.Commands
                     throw new ArgumentNullException(nameof(chatId), ex);
                 }
 
-                await _client.SendTextMessageAsync(chatId, ex.Message, replyMarkup: new ReplyKeyboardRemove());
+                await _client.SendTextMessageAsync(chatId, ex.Message);
             }
         }
     }

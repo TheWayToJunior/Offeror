@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using Offeror.TelegramBot.Extensions;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -25,17 +26,12 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
-            long? chatId = update?.Message?.Chat.Id;
-
-            if (chatId is null)
-            {
-                throw new ArgumentNullException(nameof(chatId));
-            }
+            long chatId = update.GetChatId();
 
             await _client.SendTextMessageAsync(chatId, "Specify the region to search for",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(chatId.Value, ((IStateContainer)command).GetState<SetRegionState>());
+            command.UpdateState(((IStateContainer)command).GetState<SetRegionState>());
         }
     }
 }

@@ -20,16 +20,14 @@ namespace Offeror.TelegramBot.Commands.Start.States
             _filter.Status = (update?.Message?.Text) switch
             {
                 Buttons.Applicant => "applicant",
-                Buttons.Сompany   => "company",
+                Buttons.Сompany => "company",
 
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
-            long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
             IState nextState = states.GetState<DisplayRegionsState>();
 
-            await command.UpdateState(chatId.Value, nextState)
-                .ExecuteAsync(command, update);
+            await command.UpdateState(nextState).ExecuteAsync(command, update);
         }
     }
 }
