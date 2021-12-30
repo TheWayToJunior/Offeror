@@ -15,9 +15,9 @@ namespace Offeror.TelegramBot.Commands
 
         public ICommandExecutor CommandExecutor { get; }
 
-        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommands()
+        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommandsAsync()
         {
-            return await CommandExecutor.ClearOutdatedCommands();
+            return await CommandExecutor.ClearOutdatedCommandsAsync();
         }
 
         public async Task ExecuteAsync(Update update)

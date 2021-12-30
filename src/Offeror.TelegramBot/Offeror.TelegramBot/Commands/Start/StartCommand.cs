@@ -8,17 +8,19 @@ namespace Offeror.TelegramBot.Commands
         private readonly IServiceProvider _serviceProvider;
         private readonly IState _defuildState;
 
-        public IState CommandState { get; private set; }
-
         public StartCommand(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider.CreateScope().ServiceProvider;
             _defuildState = CommandState = GetState<DisplayProfilesState>();
         }
 
-        public string CommandName => Commands.StartCommand;
+        public event EventHandler<long>? CommandCompleted;
 
-        public bool IsCompleted { get; private set; }
+        public bool IsCompleted => false;
+
+        public IState CommandState { get; private set; }
+
+        public string CommandName => Commands.StartCommand;
 
         public DateTime CommandStartTime { get; private set; }
 
@@ -29,7 +31,6 @@ namespace Offeror.TelegramBot.Commands
 
         public IState Restart()
         {
-            IsCompleted = true;
             return UpdateState(_defuildState);
         }
 

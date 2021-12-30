@@ -16,6 +16,7 @@ namespace Offeror.TelegramBot.Commands
             _commands = new Dictionary<string, Func<IBotCommand>>()
             {
                 { Commands.StartCommand, () => new StartCommand(provider) },
+                { Commands.StopCommand,  () => new StopCommand(provider) },
             };
 
             _usersCommands = new();
@@ -32,7 +33,12 @@ namespace Offeror.TelegramBot.Commands
                 SetBotCommand(update);
             }
 
-            var botCommand = GetUserCommand(update.GetChatId());
+            IBotCommand? botCommand = GetUserCommand(update.GetChatId());
+
+            if(botCommand?.IsCompleted ?? false)
+            {
+                throw new InvalidOperationException(@"The command is completed. Select a new one from the suggested list by entering the ""/"" symbol");
+            }
 
             await (botCommand?.InvokeAsync(update)
                 ?? throw new InvalidOperationException($"The command execution time is up. Please enter the command again"));
@@ -57,34 +63,53 @@ namespace Offeror.TelegramBot.Commands
             }
 
             var newCommand = _commands[commandKey].Invoke();
+            newCommand.CommandCompleted += CommandCompletedEventHandler;
+
             _usersCommands.AddOrUpdate(chatId, newCommand, (id, oldCommand) => newCommand);
+        }
+
+        private void CommandCompletedEventHandler(object? sender, long id)
+        {
+            TryClearCommand(id);
         }
 
         /// <summary>
         /// Deleted commands whose lifetime has expired
         /// </summary>
         /// <returns>A collection of deleted commands and the chat id that the command belongs to</returns>
-        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommands()
+        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommandsAsync()
         {
-            return await Task.Run(() => ClearCommands());
+            return await Task.Run(() => ClearOutdatedCommands());
         }
 
-        private IEnumerable<KeyValuePair<long, IBotCommand>> ClearCommands()
+        private IEnumerable<KeyValuePair<long, IBotCommand>> ClearOutdatedCommands()
         {
             /// TODO: Take out in the project configuration
             TimeSpan commandsLifetime = TimeSpan.FromMinutes(20);
 
-            var expiredCommands = _usersCommands.Where(key => DateTime.Now - key.Value.CommandStartTime > commandsLifetime);
+            var expiredCommands = _usersCommands.Where(key => DateTime.Now - key.Value.CommandStartTime >= commandsLifetime);
 
             foreach (var item in expiredCommands)
             {
-                if (!_usersCommands.TryRemove(item))
+                if (!TryClearCommand(item.Key))
                 {
                     throw new InvalidOperationException("Failed to free up resources occupied by commands");
                 }
 
+                item.Value.CommandCompleted -= CommandCompletedEventHandler;
                 yield return item;
             }
+        }
+
+        private bool TryClearCommand(long id)
+        {
+            if (!_usersCommands.TryRemove(id, out IBotCommand? command))
+            {
+                return false;
+            }
+
+            command.CommandCompleted -= CommandCompletedEventHandler;
+            return true;
         }
     }
 }

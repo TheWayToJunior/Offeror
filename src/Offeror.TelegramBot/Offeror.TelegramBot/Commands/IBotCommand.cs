@@ -4,11 +4,13 @@ namespace Offeror.TelegramBot.Commands
 {
     public interface IBotCommand
     {
+        event EventHandler<long>? CommandCompleted;
+
+        bool IsCompleted { get; }
+
         string CommandName { get; }
 
         DateTime CommandStartTime { get; }
-
-        bool IsCompleted { get; }
 
         IState UpdateState(IState state);
 

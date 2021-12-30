@@ -8,7 +8,7 @@ namespace Offeror.TelegramBot.Commands
         /// Deleted commands whose lifetime has expired
         /// </summary>
         /// <returns>A collection of deleted commands and the chat id that the command belongs to</returns>
-        Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommands();
+        Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommandsAsync();
 
         Task ExecuteAsync(Update update);
     }
