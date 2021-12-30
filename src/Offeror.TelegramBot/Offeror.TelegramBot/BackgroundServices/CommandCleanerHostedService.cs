@@ -34,10 +34,8 @@ namespace Offeror.TelegramBot.BackgroundServices
 
         private async Task ExecuteTaskAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Clear Outdated Commands executing.");
             var deletedCommands = await _commandExecutor.ClearOutdatedCommandsAsync();
-
-            _logger.LogInformation($"The commands have been removed: {deletedCommands.Count()}");
+            _logger.LogInformation($"[{DateTime.Now}] The commands have been removed: {deletedCommands.Count()}");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

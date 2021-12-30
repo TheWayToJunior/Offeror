@@ -68,10 +68,7 @@ namespace Offeror.TelegramBot.Commands
             _usersCommands.AddOrUpdate(chatId, newCommand, (id, oldCommand) => newCommand);
         }
 
-        private void CommandCompletedEventHandler(object? sender, long id)
-        {
-            TryClearCommand(id);
-        }
+        private void CommandCompletedEventHandler(object? sender, long id) => TryRemoveCommand(id);
 
         /// <summary>
         /// Deleted commands whose lifetime has expired
@@ -91,17 +88,16 @@ namespace Offeror.TelegramBot.Commands
 
             foreach (var item in expiredCommands)
             {
-                if (!TryClearCommand(item.Key))
+                if (!TryRemoveCommand(item.Key))
                 {
                     throw new InvalidOperationException("Failed to free up resources occupied by commands");
                 }
 
-                item.Value.CommandCompleted -= CommandCompletedEventHandler;
                 yield return item;
             }
         }
 
-        private bool TryClearCommand(long id)
+        private bool TryRemoveCommand(long id)
         {
             if (!_usersCommands.TryRemove(id, out IBotCommand? command))
             {

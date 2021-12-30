@@ -26,7 +26,6 @@ namespace Offeror.TelegramBot.Commands
         public async Task InvokeAsync(Update update)
         {
             long chatId = update.GetChatId();
-
             await _client.SendTextMessageAsync(chatId, "Search terminated", replyMarkup: new ReplyKeyboardRemove());
 
             IsCompleted = true;
