@@ -23,6 +23,7 @@ namespace Offeror.TelegramBot.BackgroundServices
         {
             _logger.LogInformation("Command Cleaner Hosted Service running.");
 
+            /// TODO: Set the launch interval in the project configuration
             _timer = new Timer((state) => _executingTask = ExecuteTaskAsync(_tokenSource.Token),
                 null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
 
@@ -32,7 +33,9 @@ namespace Offeror.TelegramBot.BackgroundServices
         private async Task ExecuteTaskAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Clear Outdated Commands executing.");
-            await _commandExecutor.ClearOutdatedCommands();
+            var deletedCommands = await _commandExecutor.ClearOutdatedCommands();
+
+            _logger.LogInformation($"The commands have been removed: {deletedCommands.Count()}");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

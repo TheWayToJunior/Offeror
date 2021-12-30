@@ -1,6 +1,5 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands
 {
@@ -16,9 +15,9 @@ namespace Offeror.TelegramBot.Commands
 
         public ICommandExecutor CommandExecutor { get; }
 
-        public async Task ClearOutdatedCommands()
+        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommands()
         {
-            await CommandExecutor.ClearOutdatedCommands();
+            return await CommandExecutor.ClearOutdatedCommands();
         }
 
         public async Task ExecuteAsync(Update update)

@@ -60,13 +60,18 @@ namespace Offeror.TelegramBot.Commands
             _usersCommands.AddOrUpdate(chatId, newCommand, (id, oldCommand) => newCommand);
         }
 
-        public async Task ClearOutdatedCommands()
+        /// <summary>
+        /// Deleted commands whose lifetime has expired
+        /// </summary>
+        /// <returns>A collection of deleted commands and the chat id that the command belongs to</returns>
+        public async Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommands()
         {
-            await Task.Run(() => ClearCommands());
+            return await Task.Run(() => ClearCommands());
         }
 
-        private void ClearCommands()
+        private IEnumerable<KeyValuePair<long, IBotCommand>> ClearCommands()
         {
+            /// TODO: Take out in the project configuration
             TimeSpan commandsLifetime = TimeSpan.FromMinutes(20);
 
             var expiredCommands = _usersCommands.Where(key => DateTime.Now - key.Value.CommandStartTime > commandsLifetime);
@@ -77,6 +82,8 @@ namespace Offeror.TelegramBot.Commands
                 {
                     throw new InvalidOperationException("Failed to free up resources occupied by commands");
                 }
+
+                yield return item;
             }
         }
     }
