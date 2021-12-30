@@ -7,7 +7,6 @@ namespace Offeror.TelegramBot.Commands.Start.States
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
-            long? chatId = update?.Message?.Chat.Id ?? throw new ArgumentNullException(nameof(chatId));
 
             IState nextState = (update?.Message?.Text) switch
             {

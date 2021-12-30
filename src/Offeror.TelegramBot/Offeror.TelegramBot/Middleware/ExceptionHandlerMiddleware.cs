@@ -1,11 +1,15 @@
-﻿namespace Offeror.TelegramBot.Middleware
+﻿using System.Text;
+
+namespace Offeror.TelegramBot.Middleware
 {
     public class ExceptionHandlerMiddleware
     {
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
         private readonly RequestDelegate _next;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger, RequestDelegate next)
         {
+            _logger = logger;
             _next = next;
         }
 
@@ -23,8 +27,16 @@
 
         private Task HandleException(HttpContext context, Exception ex)
         {
-            /// TODO : Add Logging
-            Console.WriteLine(ex.Message);
+            var builder = new StringBuilder();
+
+            builder.Append(ex.Message);
+
+            if (ex.InnerException is not null)
+            {
+                builder.Append(ex.InnerException.Message);
+            }
+
+            _logger.LogError(builder.ToString());
 
             return Task.CompletedTask;
         }

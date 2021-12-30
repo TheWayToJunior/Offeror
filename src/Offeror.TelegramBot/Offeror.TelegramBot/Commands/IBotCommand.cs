@@ -6,6 +6,8 @@ namespace Offeror.TelegramBot.Commands
     {
         string CommandName { get; }
 
+        DateTime CommandStartTime { get; }
+
         bool IsCompleted { get; }
 
         IState UpdateState(IState state);

@@ -20,6 +20,8 @@ namespace Offeror.TelegramBot.Commands
 
         public bool IsCompleted { get; private set; }
 
+        public DateTime CommandStartTime { get; private set; }
+
         public IState UpdateState(IState state)
         {
             return CommandState = state;
@@ -33,6 +35,7 @@ namespace Offeror.TelegramBot.Commands
 
         public async Task InvokeAsync(Update update)
         {
+            CommandStartTime = DateTime.Now;
             await CommandState.ExecuteAsync(this, update);
         }
 

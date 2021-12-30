@@ -16,6 +16,11 @@ namespace Offeror.TelegramBot.Commands
 
         public ICommandExecutor CommandExecutor { get; }
 
+        public async Task ClearOutdatedCommands()
+        {
+            await CommandExecutor.ClearOutdatedCommands();
+        }
+
         public async Task ExecuteAsync(Update update)
         {
             try

@@ -5,11 +5,6 @@ using Telegram.Bot.Types.Enums;
 
 namespace Offeror.TelegramBot.Commands
 {
-    public interface ICommandExecutor
-    {
-        Task ExecuteAsync(Update update);
-    }
-
     public sealed class CommandExecutor : ICommandExecutor
     {
         private readonly IDictionary<string, Func<IBotCommand>> _commands;
@@ -45,7 +40,7 @@ namespace Offeror.TelegramBot.Commands
 
         private void SetBotCommand(Update update)
         {
-            string? commandKey = update.Message?.Text;
+            string? commandKey = update.GetTextMessage();
 
             if (string.IsNullOrWhiteSpace(commandKey) || !_commands.ContainsKey(commandKey))
             {
@@ -63,6 +58,26 @@ namespace Offeror.TelegramBot.Commands
 
             var newCommand = _commands[commandKey].Invoke();
             _usersCommands.AddOrUpdate(chatId, newCommand, (id, oldCommand) => newCommand);
+        }
+
+        public async Task ClearOutdatedCommands()
+        {
+            await Task.Run(() => ClearCommands());
+        }
+
+        private void ClearCommands()
+        {
+            TimeSpan commandsLifetime = TimeSpan.FromMinutes(20);
+
+            var expiredCommands = _usersCommands.Where(key => DateTime.Now - key.Value.CommandStartTime > commandsLifetime);
+
+            foreach (var item in expiredCommands)
+            {
+                if (!_usersCommands.TryRemove(item))
+                {
+                    throw new InvalidOperationException("Failed to free up resources occupied by commands");
+                }
+            }
         }
     }
 }

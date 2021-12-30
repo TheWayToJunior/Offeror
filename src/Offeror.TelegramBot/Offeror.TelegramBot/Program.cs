@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Offeror.TelegramBot;
+using Offeror.TelegramBot.BackgroundServices;
 using Offeror.TelegramBot.Commands;
 using Offeror.TelegramBot.Data;
 using Offeror.TelegramBot.Middleware;
@@ -22,11 +23,12 @@ builder.Services.AddTelegramBot(builder.Configuration)
     .AddBotStates(Assembly.GetExecutingAssembly());
 
 builder.Services.AddSingleton<ICommandExecutor, CommandExecutor>();
+builder.Services.AddScoped<SearchFilter>();
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly())
     .AddAutoMapper(Assembly.GetExecutingAssembly());
 
-builder.Services.AddScoped<SearchFilter>();
+builder.Services.AddHostedService<CommandCleanerHostedService>();
 
 var app = builder.Build();
 
