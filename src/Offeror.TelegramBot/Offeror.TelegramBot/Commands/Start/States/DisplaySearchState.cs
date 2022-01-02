@@ -9,14 +9,12 @@ namespace Offeror.TelegramBot.Commands.Start.States
     public class DisplaySearchState : IState
     {
         private readonly TelegramBotClient _client;
+        private readonly ISearchFilterReader _filter;
 
-        /// TODO: Fix this
-        private readonly SearchFilter filter;
-
-        public DisplaySearchState(TelegramBotClient client, SearchFilter filter)
+        public DisplaySearchState(TelegramBotClient client, ISearchFilterReader filter)
         {
             _client = client;
-            this.filter = filter;
+            _filter = filter;
         }
 
         private static ReplyKeyboardMarkup ReplyKeyboardMarkup =>
@@ -32,12 +30,13 @@ namespace Offeror.TelegramBot.Commands.Start.States
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
             long chatId = update.GetChatId();
+            SearchFilter filter = _filter.GetFilter();
 
             /// TODO: Generate a message with a job search response
             await _client.SendTextMessageAsync(chatId, $"{filter.Status} {filter.Region}",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(((IStateContainer)command).GetState<SetSearchState>());
+            command.UpdateState(command.Cast<IStateContainer>().GetState<SetSearchState>());
         }
     }
 }

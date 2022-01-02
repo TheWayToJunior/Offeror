@@ -1,9 +1,59 @@
-﻿namespace Offeror.TelegramBot.Models
+﻿
+namespace Offeror.TelegramBot.Models
 {
-    public class SearchFilter
+    public interface ISearchFilterWriter
     {
+        ISearchFilterWriter SetProperty<T>(string name, T value);
+    }
+
+    public interface ISearchFilterReader
+    {
+        SearchFilter GetFilter();
+    }
+
+    /// Implementation of the separation of interfaces into read and write,
+    /// since in display commands it was only possible to read the filter and vice versa
+    public interface ISearchFilterBuilder : ISearchFilterWriter, ISearchFilterReader
+    {
+    }
+
+    public sealed class SearchFilter
+    {
+        private SearchFilter()
+        {
+        }
+
         public string? Status { get; set; }
 
         public string? Region { get; set; }
+
+        /// The class is nested to be able to create Search Filter instances with a private constructor
+        public class SearchFilterBuilder : ISearchFilterBuilder
+        {
+            private readonly SearchFilter _filter;
+
+            public SearchFilterBuilder()
+            {
+                _filter = new SearchFilter();
+            }
+
+            public ISearchFilterWriter SetProperty<T>(string name, T value) 
+            {
+                var property = _filter.GetType().GetProperty(name);
+
+                if (property == null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                property.SetValue(_filter, value);
+                return this;
+            }
+
+            public SearchFilter GetFilter()
+            {
+                return _filter;
+            }
+        }
     }
 }

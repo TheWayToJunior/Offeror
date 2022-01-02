@@ -8,7 +8,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
 
-            IState nextState = (update?.Message?.Text) switch
+            IState nextState = update?.Message?.Text switch
             {
                 Buttons.Next => states.GetState<DisplaySearchState>(),
                 Buttons.Restart => command.Restart(),

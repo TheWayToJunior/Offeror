@@ -31,7 +31,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await _client.SendTextMessageAsync(chatId, "Specify the region to search for",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(((IStateContainer)command).GetState<SetRegionState>());
+            command.UpdateState(command.Cast<IStateContainer>().GetState<SetRegionState>());
         }
     }
 }

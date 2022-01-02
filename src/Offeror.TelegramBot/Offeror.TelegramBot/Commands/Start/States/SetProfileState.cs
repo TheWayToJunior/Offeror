@@ -5,9 +5,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class SetProfileState : IState
     {
-        private readonly SearchFilter _filter;
+        private readonly ISearchFilterWriter _filter;
 
-        public SetProfileState(SearchFilter filter)
+        public SetProfileState(ISearchFilterWriter filter)
         {
             _filter = filter;
         }
@@ -16,8 +16,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
 
-            /// TODO : Save data from a message
-            _filter.Status = (update?.Message?.Text) switch
+            var status = update?.Message?.Text switch
             {
                 Buttons.Applicant => "applicant",
                 Buttons.Сompany => "company",
@@ -25,6 +24,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
+            _filter.SetProperty(nameof(SearchFilter.Status), status);
             IState nextState = states.GetState<DisplayRegionsState>();
 
             await command.UpdateState(nextState).ExecuteAsync(command, update);

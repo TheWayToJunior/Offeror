@@ -5,9 +5,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class SetRegionState : IState
     {
-        private readonly SearchFilter _filter;
+        private readonly ISearchFilterWriter _filter;
 
-        public SetRegionState(SearchFilter filter)
+        public SetRegionState(ISearchFilterWriter filter)
         {
             _filter = filter;
         }
@@ -16,8 +16,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
 
-            /// TODO : Save data from a message
-            _filter.Region = (update?.Message?.Text) switch
+            var region = update?.Message?.Text switch
             {
                 Buttons.Russia => "rus",
                 Buttons.Ukraine => "ukr",
@@ -25,6 +24,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
+            _filter.SetProperty(nameof(SearchFilter.Region), region);
             IState nextState = states.GetState<DisplaySearchState>();
 
             await command.UpdateState(nextState).ExecuteAsync(command, update);

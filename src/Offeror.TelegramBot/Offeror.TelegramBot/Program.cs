@@ -5,7 +5,6 @@ using Offeror.TelegramBot.BackgroundServices;
 using Offeror.TelegramBot.Commands;
 using Offeror.TelegramBot.Data;
 using Offeror.TelegramBot.Middleware;
-using Offeror.TelegramBot.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTelegramBot(builder.Configuration)
     .AddBotStates(Assembly.GetExecutingAssembly());
 
+builder.Services.AddBotSearchFilter();
 builder.Services.AddSingleton<ICommandExecutor, CommandExecutor>();
-builder.Services.AddScoped<SearchFilter>();
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly())
     .AddAutoMapper(Assembly.GetExecutingAssembly());

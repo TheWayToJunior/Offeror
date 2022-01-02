@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Commands;
+using Offeror.TelegramBot.Models;
 using System.Reflection;
 using Telegram.Bot;
 
@@ -10,7 +11,7 @@ namespace Offeror.TelegramBot
         {
             var token = configuration.GetSection("BotConfiguration").Get<BotConfiguration>().Token;
 
-            if(token == null)
+            if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
             }
@@ -18,7 +19,7 @@ namespace Offeror.TelegramBot
             return services.AddScoped(provider => new TelegramBotClient(token));
         }
 
-        internal static IServiceCollection AddBotStates(this IServiceCollection services, Assembly assembly) 
+        internal static IServiceCollection AddBotStates(this IServiceCollection services, Assembly assembly)
         {
             var interfaceType = typeof(IState);
 
@@ -33,6 +34,13 @@ namespace Offeror.TelegramBot
             }
 
             return services;
+        }
+
+        internal static IServiceCollection AddBotSearchFilter(this IServiceCollection services)
+        {
+            return services.AddScoped<ISearchFilterBuilder, SearchFilter.SearchFilterBuilder>()
+                .AddScoped<ISearchFilterWriter>(p => p.GetRequiredService<ISearchFilterBuilder>())
+                .AddScoped<ISearchFilterReader>(p => p.GetRequiredService<ISearchFilterBuilder>());
         }
     }
 }
