@@ -1,6 +1,7 @@
-﻿using Offeror.TelegramBot.Contracts;
+﻿using MediatR;
+using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Extensions;
-using Offeror.TelegramBot.Features.Resume;
+using Offeror.TelegramBot.Features;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -12,11 +13,13 @@ namespace Offeror.TelegramBot.Commands.Start.States
     {
         private readonly TelegramBotClient _client;
         private readonly ISearchFilterReader _filter;
+        private readonly IMediator _mediator;
 
-        public DisplaySearchState(TelegramBotClient client, ISearchFilterReader filter)
+        public DisplaySearchState(TelegramBotClient client, ISearchFilterReader filter, IMediator mediator)
         {
             _client = client;
             _filter = filter;
+            _mediator = mediator;
         }
 
         private static ReplyKeyboardMarkup ReplyKeyboardMarkup =>
@@ -32,21 +35,20 @@ namespace Offeror.TelegramBot.Commands.Start.States
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
             long chatId = update.GetChatId();
+
             SearchFilter filter = _filter.GetFilter();
+            QueryFactory factory = new();
 
-            IAnnouncement announcement = new GetResumeResponse() 
-            { 
-                FirstName = "Miha", 
-                LastName = "Smolenskiy", 
-                Position = ".NET Developer",
-                Experience = "1 year",
-                KeySkills = new[] { ".NET", "ASP.NET Core", "EF Core" },
-                Contacts = new[] { "+38095914578", "https://github.com/TheWayToJunior" },
-                Link = "https://hh.ru/resume/63d915a1ff09634cde0039ed1f654954555936"
-            };
+            object query = factory.CreateRequest(filter.Status);
+            object? response = await _mediator.Send(query);
 
-            await announcement.AcceptAsync(
-                new TelegramDisplayVisitor(_client, chatId, ReplyKeyboardMarkup));
+            if (response is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            await response.Cast<IAnnouncement>()
+                .AcceptAsync(new TelegramDisplayVisitor(_client, chatId, ReplyKeyboardMarkup));
 
             command.UpdateState(command.Cast<IStateContainer>().GetState<SetSearchState>());
         }

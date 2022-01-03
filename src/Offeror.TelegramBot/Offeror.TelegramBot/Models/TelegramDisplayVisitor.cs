@@ -58,8 +58,12 @@ namespace Offeror.TelegramBot.Models
                 builder.Append('\n');
             }
 
+            builder.Append('\n');
             builder.Append($"Company name: {vacancy.CompanyName}\n");
             builder.Append($"Skils: {string.Join(", ", vacancy.KeySkills)}\n");
+
+            builder.Append('\n');
+            builder.Append($"Link: {vacancy.Link}\n");
 
             await _client.SendTextMessageAsync(ChatId, builder.ToString(), replyMarkup: Markup);
         }

@@ -21,7 +21,7 @@ namespace Offeror.TelegramBot.Commands
 
         public IState CommandState { get; private set; }
 
-        public string CommandName => Commands.StartCommand;
+        public string CommandName => BotCommands.StartCommand;
 
         public DateTime CommandStartTime { get; private set; }
 

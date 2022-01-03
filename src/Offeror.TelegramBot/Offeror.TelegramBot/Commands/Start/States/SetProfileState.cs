@@ -1,4 +1,5 @@
-﻿using Offeror.TelegramBot.Contracts;
+﻿using Offeror.TelegramBot.Constants;
+using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot.Types;
 
@@ -19,8 +20,8 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             var status = update?.Message?.Text switch
             {
-                Buttons.Applicant => "applicant",
-                Buttons.Сompany => "company",
+                Buttons.Applicant => Requests.Vacancy,
+                Buttons.Сompany => Requests.Resume,
 
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };

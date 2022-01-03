@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Offeror.TelegramBot", "Offeror.TelegramBot\Offeror.TelegramBot.csproj", "{478296B6-2289-4966-88D4-FF25DC0FDCA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Offeror.TelegramBot.Tests", "Offeror.TelegramBot.Tests\Offeror.TelegramBot.Tests.csproj", "{514CFA9F-E2CF-4252-AFAF-B1607924ED44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Offeror.TelegramBot.Tests", "Offeror.TelegramBot.Tests\Offeror.TelegramBot.Tests.csproj", "{514CFA9F-E2CF-4252-AFAF-B1607924ED44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DA41A54E-42B4-428E-A92F-759C16D52707}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

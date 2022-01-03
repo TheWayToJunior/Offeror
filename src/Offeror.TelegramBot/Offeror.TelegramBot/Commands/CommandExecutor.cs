@@ -16,8 +16,8 @@ namespace Offeror.TelegramBot.Commands
         {
             _commands = new Dictionary<string, Func<IBotCommand>>()
             {
-                { Commands.StartCommand, () => new StartCommand(provider) },
-                { Commands.StopCommand,  () => new StopCommand(provider) },
+                { BotCommands.StartCommand, () => new StartCommand(provider) },
+                { BotCommands.StopCommand,  () => new StopCommand(provider) },
             };
 
             _usersCommands = new();

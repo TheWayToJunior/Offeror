@@ -16,7 +16,7 @@ namespace Offeror.TelegramBot.Commands
                 .ServiceProvider.GetRequiredService<TelegramBotClient>();
         }
 
-        public string CommandName => Commands.StopCommand;
+        public string CommandName => BotCommands.StopCommand;
 
         public DateTime CommandStartTime { get; private set; }
 
