@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Offeror.TelegramBot.Commands;
+using Offeror.TelegramBot.Contracts;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 

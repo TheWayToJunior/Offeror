@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Offeror.TelegramBot.Commands;
 using Offeror.TelegramBot.Commands.Start.States;
+using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Extensions;
 using System;
 using Xunit;

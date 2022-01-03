@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot.Types;
 
-namespace Offeror.TelegramBot.Commands
+namespace Offeror.TelegramBot.Contracts
 {
     public interface IBotCommand
     {

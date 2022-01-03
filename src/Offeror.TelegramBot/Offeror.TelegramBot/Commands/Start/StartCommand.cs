@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Commands.Start.States;
+using Offeror.TelegramBot.Contracts;
 using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands

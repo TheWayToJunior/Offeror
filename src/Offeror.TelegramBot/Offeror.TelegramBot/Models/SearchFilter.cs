@@ -1,22 +1,7 @@
-﻿
+﻿using Offeror.TelegramBot.Contracts;
+
 namespace Offeror.TelegramBot.Models
 {
-    public interface ISearchFilterWriter
-    {
-        ISearchFilterWriter SetProperty<T>(string name, T value);
-    }
-
-    public interface ISearchFilterReader
-    {
-        SearchFilter GetFilter();
-    }
-
-    /// Implementation of the separation of interfaces into read and write,
-    /// since in display commands it was only possible to read the filter and vice versa
-    public interface ISearchFilterBuilder : ISearchFilterWriter, ISearchFilterReader
-    {
-    }
-
     public sealed class SearchFilter
     {
         private SearchFilter()

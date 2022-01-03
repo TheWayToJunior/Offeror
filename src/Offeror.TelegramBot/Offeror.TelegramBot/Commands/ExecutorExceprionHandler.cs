@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using Offeror.TelegramBot.Contracts;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands

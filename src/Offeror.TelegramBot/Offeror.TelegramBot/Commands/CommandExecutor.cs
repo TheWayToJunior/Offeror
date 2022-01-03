@@ -1,4 +1,5 @@
-﻿using Offeror.TelegramBot.Extensions;
+﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Extensions;
 using System.Collections.Concurrent;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;

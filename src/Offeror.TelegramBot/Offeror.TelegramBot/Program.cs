@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Offeror.TelegramBot;
 using Offeror.TelegramBot.BackgroundServices;
 using Offeror.TelegramBot.Commands;
+using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Data;
 using Offeror.TelegramBot.Middleware;
 using System.Reflection;

@@ -1,4 +1,5 @@
-﻿using Offeror.TelegramBot.Extensions;
+﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Extensions;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;

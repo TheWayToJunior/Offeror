@@ -1,4 +1,4 @@
-﻿using Offeror.TelegramBot.Commands;
+﻿using Offeror.TelegramBot.Contracts;
 
 namespace Offeror.TelegramBot.BackgroundServices
 {

@@ -1,4 +1,4 @@
-﻿using Offeror.TelegramBot.Commands;
+﻿using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Models;
 using System.Reflection;
 using Telegram.Bot;

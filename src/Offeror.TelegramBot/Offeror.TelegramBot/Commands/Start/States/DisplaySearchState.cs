@@ -1,4 +1,6 @@
-﻿using Offeror.TelegramBot.Extensions;
+﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Extensions;
+using Offeror.TelegramBot.Features.Resume;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -32,9 +34,19 @@ namespace Offeror.TelegramBot.Commands.Start.States
             long chatId = update.GetChatId();
             SearchFilter filter = _filter.GetFilter();
 
-            /// TODO: Generate a message with a job search response
-            await _client.SendTextMessageAsync(chatId, $"{filter.Status} {filter.Region}",
-                replyMarkup: ReplyKeyboardMarkup);
+            IAnnouncement announcement = new GetResumeResponse() 
+            { 
+                FirstName = "Miha", 
+                LastName = "Smolenskiy", 
+                Position = ".NET Developer",
+                Experience = "1 year",
+                KeySkills = new[] { ".NET", "ASP.NET Core", "EF Core" },
+                Contacts = new[] { "+38095914578", "https://github.com/TheWayToJunior" },
+                Link = "https://hh.ru/resume/63d915a1ff09634cde0039ed1f654954555936"
+            };
+
+            await announcement.AcceptAsync(
+                new TelegramDisplayVisitor(_client, chatId, ReplyKeyboardMarkup));
 
             command.UpdateState(command.Cast<IStateContainer>().GetState<SetSearchState>());
         }
