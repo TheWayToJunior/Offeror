@@ -8,9 +8,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class DisplayProfilesState : IState
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
 
-        public DisplayProfilesState(TelegramBotClient client)
+        public DisplayProfilesState(ITelegramBotClient client)
         {
             _client = client;
         }

@@ -6,9 +6,9 @@ namespace Offeror.TelegramBot.Commands
 {
     public class ExecutorExceprionHandler : ICommandExecutor
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
 
-        public ExecutorExceprionHandler(ICommandExecutor commandExecutor, TelegramBotClient client)
+        public ExecutorExceprionHandler(ICommandExecutor commandExecutor, ITelegramBotClient client)
         {
             _client = client;
             CommandExecutor = commandExecutor;
@@ -39,5 +39,7 @@ namespace Offeror.TelegramBot.Commands
                 await _client.SendTextMessageAsync(chatId, ex.Message);
             }
         }
+
+        public IBotCommand? GetUserCommand(long chatId) => CommandExecutor.GetUserCommand(chatId); 
     }
 }

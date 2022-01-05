@@ -9,9 +9,9 @@ namespace Offeror.TelegramBot.Models
 {
     public class TelegramDisplayVisitor : IVisitor
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
 
-        public TelegramDisplayVisitor(TelegramBotClient client, long chatId, ReplyKeyboardMarkup markup)
+        public TelegramDisplayVisitor(ITelegramBotClient client, long chatId, ReplyKeyboardMarkup markup)
         {
             _client = client;
 

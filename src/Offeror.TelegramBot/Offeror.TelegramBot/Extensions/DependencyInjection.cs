@@ -16,7 +16,7 @@ namespace Offeror.TelegramBot
                 throw new ArgumentNullException(nameof(token));
             }
 
-            return services.AddScoped(provider => new TelegramBotClient(token));
+            return services.AddScoped<ITelegramBotClient>(provider => new TelegramBotClient(token));
         }
 
         internal static IServiceCollection AddBotStates(this IServiceCollection services, Assembly assembly)

@@ -11,11 +11,11 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class DisplaySearchState : IState
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
         private readonly ISearchFilterReader _filter;
         private readonly IMediator _mediator;
 
-        public DisplaySearchState(TelegramBotClient client, ISearchFilterReader filter, IMediator mediator)
+        public DisplaySearchState(ITelegramBotClient client, ISearchFilterReader filter, IMediator mediator)
         {
             _client = client;
             _filter = filter;

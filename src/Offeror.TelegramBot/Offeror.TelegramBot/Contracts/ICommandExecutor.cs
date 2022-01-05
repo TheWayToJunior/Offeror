@@ -11,5 +11,7 @@ namespace Offeror.TelegramBot.Contracts
         Task<IEnumerable<KeyValuePair<long, IBotCommand>>> ClearOutdatedCommandsAsync();
 
         Task ExecuteAsync(Update update);
+
+        IBotCommand? GetUserCommand(long chatId);
     }
 }

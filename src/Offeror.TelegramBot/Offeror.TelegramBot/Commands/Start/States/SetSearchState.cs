@@ -17,7 +17,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
-            if(nextState is DisplayRegionsState)
+            if(nextState is DisplaySearchState)
             {
                 command.UpdateState(nextState);
             }

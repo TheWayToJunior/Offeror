@@ -23,7 +23,7 @@ namespace Offeror.TelegramBot.Commands
             _usersCommands = new();
         }
 
-        private IBotCommand? GetUserCommand(long chatId) => _usersCommands.GetValueOrDefault(chatId);
+        public IBotCommand? GetUserCommand(long chatId) => _usersCommands.GetValueOrDefault(chatId);
 
         public async Task ExecuteAsync(Update update)
         {

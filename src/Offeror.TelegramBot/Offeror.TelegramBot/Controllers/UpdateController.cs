@@ -12,7 +12,7 @@ namespace Offeror.TelegramBot.Controllers
     {
         private readonly ICommandExecutor _commandExecutor;
 
-        public UpdateController(ICommandExecutor commandExecutor, TelegramBotClient client)
+        public UpdateController(ICommandExecutor commandExecutor, ITelegramBotClient client)
         {
             _commandExecutor = new ExecutorExceprionHandler(commandExecutor, client);
         }

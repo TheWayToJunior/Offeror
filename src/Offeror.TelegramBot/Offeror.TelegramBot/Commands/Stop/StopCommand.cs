@@ -8,12 +8,12 @@ namespace Offeror.TelegramBot.Commands
 {
     public class StopCommand : IBotCommand
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
 
         public StopCommand(IServiceProvider serviceProvider)
         {
             _client = serviceProvider.CreateScope()
-                .ServiceProvider.GetRequiredService<TelegramBotClient>();
+                .ServiceProvider.GetRequiredService<ITelegramBotClient>();
         }
 
         public string CommandName => BotCommands.StopCommand;

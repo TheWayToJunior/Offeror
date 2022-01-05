@@ -8,9 +8,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class DisplayRegionsState : IState
     {
-        private readonly TelegramBotClient _client;
+        private readonly ITelegramBotClient _client;
 
-        public DisplayRegionsState(TelegramBotClient client)
+        public DisplayRegionsState(ITelegramBotClient client)
         {
             _client = client;
         }
