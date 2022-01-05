@@ -10,12 +10,14 @@
 
         public const string Сompany = "Сompany 🤑";
 
-        public const string Russia = "Russia";
+        public const string Russia = "🇷🇺";
 
-        public const string Ukraine = "Ukraine";
+        public const string Ukraine = "🇺🇦";
 
-        public const string Next = "Next";
+        public const string Next = "👉";
 
         public const string Restart = "Restart";
+
+        public const string Back = "👈";
     }
 }

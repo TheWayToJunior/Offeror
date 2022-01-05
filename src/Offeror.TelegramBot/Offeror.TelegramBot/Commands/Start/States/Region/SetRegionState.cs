@@ -17,18 +17,29 @@ namespace Offeror.TelegramBot.Commands.Start.States
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
 
-            var region = update?.Message?.Text switch
+            IState nextState = update?.Message?.Text switch
             {
-                Buttons.Russia => "rus",
-                Buttons.Ukraine => "ukr",
+                Buttons.Russia  => ButtonNextHandler(states, "rus"),
+                Buttons.Ukraine => ButtonNextHandler(states, "ukr"),
+                Buttons.Back    => ButtonBackHandler(states),
 
                 _ => throw new InvalidOperationException("There is no such answer option"),
             };
 
-            _filter.SetProperty(nameof(SearchFilter.Region), region);
-            IState nextState = states.GetState<DisplaySearchState>();
-
             await command.UpdateState(nextState).ExecuteAsync(command, update);
+        }
+
+        private IState ButtonNextHandler(IStateContainer states, string filter)
+        {
+            _filter.SetProperty(
+                nameof(SearchFilter.Region), filter);
+
+            return states.GetState<DisplaySearchState>();
+        }
+
+        private IState ButtonBackHandler(IStateContainer states)
+        {
+            return states.GetState<DisplayProfilesState>();
         }
     }
 }

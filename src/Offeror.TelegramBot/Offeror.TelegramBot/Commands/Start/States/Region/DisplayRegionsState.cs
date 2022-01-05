@@ -19,7 +19,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             new(
                 new[]
                 {
-                    new KeyboardButton[] { Buttons.Russia, Buttons.Ukraine },
+                    new KeyboardButton[] { Buttons.Russia, Buttons.Ukraine, Buttons.Back }
                 })
             {
                 ResizeKeyboard = true
