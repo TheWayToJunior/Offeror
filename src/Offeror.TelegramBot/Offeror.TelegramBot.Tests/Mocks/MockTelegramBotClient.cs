@@ -7,11 +7,11 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Tests.Mocks
 {
-    internal class MockTelegramBotClientFactory
+    internal class MockTelegramBotClient
     {
         private readonly Mock<ITelegramBotClient> _client;
 
-        public MockTelegramBotClientFactory()
+        public MockTelegramBotClient()
         {
             _client = new Mock<ITelegramBotClient>();
         }

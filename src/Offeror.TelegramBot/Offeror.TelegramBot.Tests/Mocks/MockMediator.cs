@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Offeror.TelegramBot.Tests.Mocks
 {
-    internal class MockMediatorFactory
+    internal class MockMediator
     {
-        public Mock<IMediator> CreateAnnouncementQueryHandler()
+        public static Mock<IMediator> CreateAnnouncementQueryHandler()
         {
             var response = new Mock<IAnnouncement>();
             response

@@ -1,9 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using Offeror.TelegramBot.Commands;
 using Offeror.TelegramBot.Commands.Start.States;
 using Offeror.TelegramBot.Contracts;
 using Offeror.TelegramBot.Extensions;
+using Offeror.TelegramBot.Tests.Mocks;
 using System;
 using Xunit;
 
@@ -39,25 +38,12 @@ namespace Offeror.TelegramBot.Tests
         [Fact]
         public void BotCommandCast_ExceptionIsNotNull()
         {
-            var serviceProvider = new Mock<IServiceProvider>();
+            var serviceProviderBuilder = new MockServiceProvider();
+            serviceProviderBuilder
+                .AddService(new DisplayProfilesState(null))
+                .Builde();
 
-            var serviceScope = new Mock<IServiceScope>();
-            serviceScope.Setup(x => x.ServiceProvider).Returns(serviceProvider.Object);
-
-            serviceProvider
-                .Setup(x => x.GetService(typeof(DisplayProfilesState)))
-                .Returns(new DisplayProfilesState(null));
-
-            var serviceScopeFactory = new Mock<IServiceScopeFactory>();
-            serviceScopeFactory
-                .Setup(x => x.CreateScope())
-                .Returns(serviceScope.Object);
-
-            serviceProvider
-                .Setup(x => x.GetService(typeof(IServiceScopeFactory)))
-                .Returns(serviceScopeFactory.Object);
-
-            IBotCommand botCommand = new StartCommand(serviceProvider.Object);
+            IBotCommand botCommand = new StartCommand(serviceProviderBuilder.GetResult());
 
             var container = botCommand.Cast<IStateContainer>();
 

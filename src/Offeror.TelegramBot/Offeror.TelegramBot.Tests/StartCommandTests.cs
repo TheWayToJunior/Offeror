@@ -16,9 +16,9 @@ namespace Offeror.TelegramBot.Tests
         [Fact]
         public async Task DisplayProfilesState_SwitchState()
         {
-            var client = new MockTelegramBotClientFactory().CreateMockSendMessageRequest();
+            var client = new MockTelegramBotClient().CreateMockSendMessageRequest();
 
-            var serviceProviderBuilder = new MockServiceProviderBuilder();
+            var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
                 .AddService(new DisplayProfilesState(client.Object))
                 .AddService(new SetProfileState(null))
@@ -37,7 +37,7 @@ namespace Offeror.TelegramBot.Tests
         [Fact]
         public async Task SetProfileState_ButtonNext_StateLoop()
         {
-            var mediator = new MockMediatorFactory().CreateAnnouncementQueryHandler();
+            var mediator = MockMediator.CreateAnnouncementQueryHandler();
             var searchFilter = SearchFilterFactory.CreateSearchFilter(nameof(SearchFilter.Status), Requests.Vacancy);
             var currentState = new SetSearchState();
 
@@ -45,7 +45,7 @@ namespace Offeror.TelegramBot.Tests
             reader.Setup(x => x.GetFilter())
                 .Returns(searchFilter);
 
-            var serviceProviderBuilder = new MockServiceProviderBuilder();
+            var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
                 .AddService(new DisplayProfilesState(null))
                 .AddService(new DisplaySearchState(null, reader.Object, mediator.Object))
@@ -68,10 +68,10 @@ namespace Offeror.TelegramBot.Tests
         [Fact]
         public async Task SetProfileState_ButtonRestart_StateRestart()
         {
-            var client = new MockTelegramBotClientFactory().CreateMockSendMessageRequest();
+            var client = new MockTelegramBotClient().CreateMockSendMessageRequest();
             var currentState = new SetSearchState();
 
-            var serviceProviderBuilder = new MockServiceProviderBuilder();
+            var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
                 .AddService(new DisplayProfilesState(client.Object))
                 .AddService(new SetProfileState(null))

@@ -4,16 +4,16 @@ using System;
 
 namespace Offeror.TelegramBot.Tests.Mocks
 {
-    internal class MockServiceProviderBuilder
+    internal class MockServiceProvider
     {
         private readonly Mock<IServiceProvider> _serviceProvider;
 
-        public MockServiceProviderBuilder()
+        public MockServiceProvider()
         {
             _serviceProvider = new();
         }
 
-        public MockServiceProviderBuilder Builde()
+        public MockServiceProvider Builde()
         {
             var serviceScope = new Mock<IServiceScope>();
             serviceScope.Setup(x => x.ServiceProvider).Returns(_serviceProvider.Object);
@@ -30,7 +30,7 @@ namespace Offeror.TelegramBot.Tests.Mocks
             return this;
         }
 
-        public MockServiceProviderBuilder AddService<T>(T result)
+        public MockServiceProvider AddService<T>(T result)
         {
             _serviceProvider
                 .Setup(x => x.GetService(typeof(T)))

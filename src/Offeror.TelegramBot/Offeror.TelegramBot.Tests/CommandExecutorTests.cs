@@ -19,10 +19,10 @@ namespace Offeror.TelegramBot.Tests
                 new MessageEntity() { Type = MessageEntityType.BotCommand } 
             };
 
-            var mockClient = new MockTelegramBotClientFactory()
+            var mockClient = new MockTelegramBotClient()
                 .CreateMockSendMessageRequest();
 
-            var mockProvider = new MockServiceProviderBuilder();
+            var mockProvider = new MockServiceProvider();
             mockProvider.AddService(mockClient.Object).Builde();
 
             var commands = new CommandExecutor(mockProvider.GetResult());
