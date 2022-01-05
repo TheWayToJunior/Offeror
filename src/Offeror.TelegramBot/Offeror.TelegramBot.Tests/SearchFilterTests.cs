@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Offeror.TelegramBot.Tests
 {
-    public class SearchFilterTest
+    public class SearchFilterTests
     {
         [Fact]
         public void SearchFilterBuilder_CreateSearchFilter()

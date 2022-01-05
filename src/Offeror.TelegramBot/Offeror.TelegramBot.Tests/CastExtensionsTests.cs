@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Offeror.TelegramBot.Tests
 {
-    public class CastExtensionsTest
+    public class CastExtensionsTests
     {
         [Fact]
         public void ObjectCastToString_ExceptionIsNull()
