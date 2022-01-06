@@ -7,7 +7,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Models
 {
-    public class TelegramDisplayVisitor : IVisitor
+    public class TelegramDisplayVisitor : IDisplayVisitor
     {
         private readonly ITelegramBotClient _client;
 

@@ -7,7 +7,7 @@ using Offeror.TelegramBot.Data;
 
 #nullable disable
 
-namespace Offeror.TelegramBot.Migrations
+namespace Offeror.TelegramBot.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

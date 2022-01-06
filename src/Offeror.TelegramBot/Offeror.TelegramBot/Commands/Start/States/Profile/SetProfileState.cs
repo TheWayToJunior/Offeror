@@ -1,5 +1,6 @@
 ﻿using Offeror.TelegramBot.Constants;
 using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Exceptions;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot.Types;
 
@@ -23,7 +24,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 Buttons.Applicant => Requests.Vacancy,
                 Buttons.Сompany => Requests.Resume,
 
-                _ => throw new InvalidOperationException("There is no such answer option"),
+                _ => throw new CommandNotFoundException("There is no such answer option"),
             };
 
             _filter.SetProperty(nameof(SearchFilter.Status), status);

@@ -19,7 +19,7 @@ namespace Offeror.TelegramBot.Features.Resume
 
         public string Link { get; set; }
 
-        public async Task AcceptAsync(IVisitor visitor)
+        public async Task AcceptAsync(IDisplayVisitor visitor)
         {
             await visitor.VisitAsync(this);
         }

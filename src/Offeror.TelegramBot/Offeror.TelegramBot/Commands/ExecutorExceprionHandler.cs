@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -29,6 +30,11 @@ namespace Offeror.TelegramBot.Commands
             }
             catch (Exception ex)
             {
+                if (ex is not INotifiableException notifiable)
+                {
+                    throw;
+                }
+
                 long? chatId = update?.Message?.Chat.Id;
 
                 if (chatId is null)
@@ -36,7 +42,7 @@ namespace Offeror.TelegramBot.Commands
                     throw new ArgumentNullException(nameof(chatId), ex);
                 }
 
-                await _client.SendTextMessageAsync(chatId, ex.Message);
+                await notifiable.NotifyAsync(new TelegramNotifyExceptionVisitor(_client), chatId.Value);
             }
         }
 

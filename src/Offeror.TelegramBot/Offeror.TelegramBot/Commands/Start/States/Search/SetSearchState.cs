@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Exceptions;
 using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands.Start.States
@@ -15,7 +16,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 Buttons.Back => states.GetState<DisplayRegionsState>(),
                 Buttons.Restart => command.Restart(),
 
-                _ => throw new InvalidOperationException("There is no such answer option"),
+                _ => throw new CommandNotFoundException("There is no such answer option"),
             };
 
             if(nextState is DisplaySearchState)

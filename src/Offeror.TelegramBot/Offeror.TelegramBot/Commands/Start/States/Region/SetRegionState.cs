@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Exceptions;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot.Types;
 
@@ -23,7 +24,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 Buttons.Ukraine => ButtonNextHandler(states, "ukr"),
                 Buttons.Back    => ButtonBackHandler(states),
 
-                _ => throw new InvalidOperationException("There is no such answer option"),
+                _ => throw new CommandNotFoundException("There is no such answer option"),
             };
 
             await command.UpdateState(nextState).ExecuteAsync(command, update);

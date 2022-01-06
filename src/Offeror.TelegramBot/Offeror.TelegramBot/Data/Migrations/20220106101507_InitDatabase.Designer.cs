@@ -8,10 +8,10 @@ using Offeror.TelegramBot.Data;
 
 #nullable disable
 
-namespace Offeror.TelegramBot.Migrations
+namespace Offeror.TelegramBot.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211226181933_InitDatabase")]
+    [Migration("20220106101507_InitDatabase")]
     partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

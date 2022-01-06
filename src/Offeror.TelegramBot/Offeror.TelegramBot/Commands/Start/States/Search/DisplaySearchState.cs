@@ -26,7 +26,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             new(
                 new[]
                 {
-                    new KeyboardButton[] { Buttons.Next, Buttons.Back, Buttons.Restart },
+                    new KeyboardButton[] { Buttons.Next, Buttons.Restart, Buttons.Back },
                 })
             {
                 ResizeKeyboard = true

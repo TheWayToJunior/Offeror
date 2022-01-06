@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Exceptions;
 using Offeror.TelegramBot.Extensions;
 using System.Collections.Concurrent;
 using Telegram.Bot.Types;
@@ -38,11 +39,12 @@ namespace Offeror.TelegramBot.Commands
 
             if(botCommand?.IsCompleted ?? false)
             {
-                throw new InvalidOperationException(@"The command is completed. Select a new one from the suggested list by entering the ""/"" symbol");
+                /// Will happen only if the end of the command has not been processed
+                throw new InvalidOperationException("The command is completed");
             }
 
             await (botCommand?.InvokeAsync(update)
-                ?? throw new InvalidOperationException($"The command execution time is up. Please enter the command again"));
+                ?? throw new CommandNoSelectException());
         }
 
         private void SetBotCommand(Update update)
@@ -51,7 +53,7 @@ namespace Offeror.TelegramBot.Commands
 
             if (string.IsNullOrWhiteSpace(commandKey) || !_commands.ContainsKey(commandKey))
             {
-                throw new InvalidOperationException("The specified command does not exist");
+                throw new CommandNotFoundException();
             }
 
             long chatId = update.GetChatId();
@@ -91,7 +93,7 @@ namespace Offeror.TelegramBot.Commands
             {
                 if (!TryRemoveCommand(item.Key))
                 {
-                    throw new InvalidOperationException("Failed to free up resources occupied by commands");
+                    throw new FailDeleteCommandException();
                 }
 
                 yield return item;

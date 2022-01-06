@@ -12,7 +12,7 @@ namespace Offeror.TelegramBot.Tests.Mocks
         {
             var response = new Mock<IAnnouncement>();
             response
-                .Setup(x => x.AcceptAsync(It.IsAny<IVisitor>()))
+                .Setup(x => x.AcceptAsync(It.IsAny<IDisplayVisitor>()))
                 .Verifiable();
 
             var mediator = new Mock<IMediator>();

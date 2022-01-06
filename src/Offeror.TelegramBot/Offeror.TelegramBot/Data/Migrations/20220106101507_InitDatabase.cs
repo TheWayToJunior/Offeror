@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Offeror.TelegramBot.Migrations
+namespace Offeror.TelegramBot.Data.Migrations
 {
     public partial class InitDatabase : Migration
     {
