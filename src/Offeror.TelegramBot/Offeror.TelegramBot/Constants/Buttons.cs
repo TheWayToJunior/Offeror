@@ -8,19 +8,21 @@ namespace Offeror.TelegramBot
 
         public const string Dislike = "👎";
 
-        public const string Applicant = "Applicant 💻";
+        public const string Applicant = "💻 Applicant";
 
-        public const string Сompany = "Сompany 💼";
+        public const string Сompany = "💼 Сompany";
 
         public const string Russia = "🇷🇺";
 
         public const string Ukraine = "🇺🇦";
 
-        public const string Next = "🔎";
+        public const string Search = "🔎";
 
-        public const string Restart = "Restart";
+        public const string Restart = "🔄";
 
         public const string Back = "👈";
+
+        public const string Clear = "❌";
 
         public const string Start = BotCommands.StartCommand;
     }

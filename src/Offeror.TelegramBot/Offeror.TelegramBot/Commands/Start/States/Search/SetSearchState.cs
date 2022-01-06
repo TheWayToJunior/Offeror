@@ -12,8 +12,8 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             IState nextState = update?.Message?.Text switch
             {
-                Buttons.Next => states.GetState<DisplaySearchState>(),
-                Buttons.Back => states.GetState<DisplayRegionsState>(),
+                Buttons.Search => states.GetState<DisplaySearchState>(),
+                Buttons.Back => states.GetState<DisplayKeywordsState>(),
                 Buttons.Restart => command.Restart(),
 
                 _ => throw new CommandNotFoundException("There is no such answer option"),

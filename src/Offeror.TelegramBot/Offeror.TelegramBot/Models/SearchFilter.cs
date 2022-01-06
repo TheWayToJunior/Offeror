@@ -8,9 +8,11 @@ namespace Offeror.TelegramBot.Models
         {
         }
 
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
-        public string? Region { get; set; }
+        public string Region { get; set; }
+
+        public ICollection<string> Keywords { get; set; }
 
         /// The class is nested to be able to create Search Filter instances with a private constructor
         public class SearchFilterBuilder : ISearchFilterBuilder
@@ -19,7 +21,10 @@ namespace Offeror.TelegramBot.Models
 
             public SearchFilterBuilder()
             {
-                _filter = new SearchFilter();
+                _filter = new SearchFilter() 
+                {
+                    Keywords = new List<string>()
+                };
             }
 
             public ISearchFilterWriter SetProperty<T>(string name, T value) 
@@ -35,9 +40,27 @@ namespace Offeror.TelegramBot.Models
                 return this;
             }
 
+            public ISearchFilterWriter AppendKeyword(string keyword)
+            {
+                if(_filter.Keywords.Contains(keyword))
+                {
+                    _filter.Keywords.Remove(keyword);
+                    return this;
+                }
+
+                _filter.Keywords.Add(keyword);
+                return this;
+            }
+
             public SearchFilter GetFilter()
             {
                 return _filter;
+            }
+
+            public ISearchFilterWriter ClearKeyword()
+            {
+                _filter.Keywords.Clear();
+                return this;
             }
         }
     }

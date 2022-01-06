@@ -11,6 +11,10 @@ namespace Offeror.TelegramBot.Contracts
     public interface ISearchFilterWriter
     {
         ISearchFilterWriter SetProperty<T>(string name, T value);
+
+        ISearchFilterWriter AppendKeyword(string keyword);
+
+        ISearchFilterWriter ClearKeyword();
     }
 
     public interface ISearchFilterReader

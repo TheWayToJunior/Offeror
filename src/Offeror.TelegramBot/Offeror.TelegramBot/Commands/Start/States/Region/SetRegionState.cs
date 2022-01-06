@@ -35,7 +35,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             _filter.SetProperty(
                 nameof(SearchFilter.Region), filter);
 
-            return states.GetState<DisplaySearchState>();
+            return states.GetState<DisplayKeywordsState>();
         }
 
         private IState ButtonBackHandler(IStateContainer states)

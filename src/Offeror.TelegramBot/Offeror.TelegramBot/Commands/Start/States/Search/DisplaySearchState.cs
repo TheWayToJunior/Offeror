@@ -26,7 +26,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             new(
                 new[]
                 {
-                    new KeyboardButton[] { Buttons.Next, Buttons.Restart, Buttons.Back },
+                    new KeyboardButton[] { Buttons.Search, Buttons.Restart, Buttons.Back },
                 })
             {
                 ResizeKeyboard = true
@@ -39,7 +39,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             SearchFilter filter = _filter.GetFilter();
             QueryFactory factory = new();
 
-            object query = factory.CreateRequest(filter.Status);
+            object query = factory.CreateRequest(filter);
             object? response = await _mediator.Send(query);
 
             if (response is null)

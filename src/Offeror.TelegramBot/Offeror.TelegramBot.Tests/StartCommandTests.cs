@@ -55,7 +55,7 @@ namespace Offeror.TelegramBot.Tests
             var command = new StartCommand(serviceProviderBuilder.GetResult());
             command.UpdateState(currentState);
 
-            Update update = UpdateFactory.CreateUpdate(1, Buttons.Next);
+            Update update = UpdateFactory.CreateUpdate(1, Buttons.Search);
 
             /// Act
             await command.InvokeAsync(update);
