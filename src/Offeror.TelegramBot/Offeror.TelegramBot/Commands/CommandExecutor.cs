@@ -28,9 +28,7 @@ namespace Offeror.TelegramBot.Commands
 
         public async Task ExecuteAsync(Update update)
         {
-            var command = update.Message?.Entities?.SingleOrDefault(e => e.Type == MessageEntityType.BotCommand);
-
-            if (command is not null)
+            if (update.IsTypeMessage(MessageEntityType.BotCommand))
             {
                 SetBotCommand(update);
             }
