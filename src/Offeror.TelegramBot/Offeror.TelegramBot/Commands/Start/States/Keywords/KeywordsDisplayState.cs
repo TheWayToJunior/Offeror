@@ -29,7 +29,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
                 ResizeKeyboard = true
             };
 
-        public async Task ExecuteAsync(IBotCommand command, Update update)
+        public async Task ExecuteAsync(IBotStateMachine command, Update update)
         {
             long chatId = update.GetChatId();
             SearchFilter searchFilter = _filterReader.GetFilter();

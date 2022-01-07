@@ -4,7 +4,7 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands
 {
-    public class StartCommand : IBotCommand, IStateContainer
+    public class StartCommand : IBotStateMachine, IStateContainer
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IState _defuildState;

@@ -2,25 +2,26 @@
 
 namespace Offeror.TelegramBot.Contracts
 {
-    public interface IBotCommand
+    public interface ICompletable<T>
     {
-        event EventHandler<long>? CommandCompleted;
+        event EventHandler<T>? CommandCompleted;
 
         bool IsCompleted { get; }
+    }
 
+    public interface IBotCommand : ICompletable<long>
+    {
         string CommandName { get; }
 
         DateTime CommandStartTime { get; }
 
-        IState UpdateState(IState state);
-
-        IState Restart();
-
         Task InvokeAsync(Update update);
     }
 
-    public interface IStateContainer
+    public interface IBotStateMachine : IBotCommand
     {
-        IState GetState<T>() where T : IState;
+        IState UpdateState(IState state);
+
+        IState Restart();
     }
 }

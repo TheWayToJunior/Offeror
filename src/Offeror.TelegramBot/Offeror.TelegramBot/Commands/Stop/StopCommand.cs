@@ -32,15 +32,5 @@ namespace Offeror.TelegramBot.Commands
             IsCompleted = true;
             CommandCompleted?.Invoke(this, chatId);
         }
-
-        public IState Restart()
-        {
-            throw new NotImplementedException("This command cannot be restarted");
-        }
-
-        public IState UpdateState(IState state)
-        {
-            throw new NotImplementedException("This command does not contain states");
-        }
     }
 }

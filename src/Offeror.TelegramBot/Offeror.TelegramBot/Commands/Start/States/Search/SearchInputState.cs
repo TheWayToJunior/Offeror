@@ -6,7 +6,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
 {
     public class SearchInputState : IState
     {
-        public async Task ExecuteAsync(IBotCommand command, Update update)
+        public async Task ExecuteAsync(IBotStateMachine command, Update update)
         {
             var states = command as IStateContainer ?? throw new InvalidCastException();
 

@@ -59,7 +59,9 @@ namespace Offeror.TelegramBot.Commands
 
             if (currentCommand?.CommandName == commandKey)
             {
-                currentCommand.Restart(); 
+                currentCommand.Cast<IBotStateMachine>()
+                    .Restart();
+
                 return;
             }
 

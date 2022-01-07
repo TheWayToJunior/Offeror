@@ -4,6 +4,6 @@ namespace Offeror.TelegramBot.Contracts
 {
     public interface IState
     {
-        Task ExecuteAsync(IBotCommand command, Update update);
+        Task ExecuteAsync(IBotStateMachine command, Update update);
     }
 }
