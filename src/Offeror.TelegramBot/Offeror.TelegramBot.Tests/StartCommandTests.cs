@@ -20,8 +20,8 @@ namespace Offeror.TelegramBot.Tests
 
             var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
-                .AddService(new DisplayProfilesState(client.Object))
-                .AddService(new SetProfileState(null))
+                .AddService(new ProfileDisplayState(client.Object))
+                .AddService(new ProfileInputState(null))
                 .Builde();
 
             var command = new StartCommand(serviceProviderBuilder.GetResult());
@@ -31,7 +31,7 @@ namespace Offeror.TelegramBot.Tests
             await command.InvokeAsync(update);
 
             Assert.NotNull(command.CommandState);
-            Assert.IsType<SetProfileState>(command.CommandState);
+            Assert.IsType<ProfileInputState>(command.CommandState);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Offeror.TelegramBot.Tests
         {
             var mediator = MockMediator.CreateAnnouncementQueryHandler();
             var searchFilter = SearchFilterFactory.CreateSearchFilter(nameof(SearchFilter.Status), Requests.Vacancy);
-            var currentState = new SetSearchState();
+            var currentState = new SearchInputState();
 
             var reader = new Mock<ISearchFilterReader>();
             reader.Setup(x => x.GetFilter())
@@ -47,8 +47,8 @@ namespace Offeror.TelegramBot.Tests
 
             var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
-                .AddService(new DisplayProfilesState(null))
-                .AddService(new DisplaySearchState(null, reader.Object, mediator.Object))
+                .AddService(new ProfileDisplayState(null))
+                .AddService(new SearchDisplayState(null, reader.Object, mediator.Object))
                 .AddService(currentState)
                 .Builde();
 
@@ -61,7 +61,7 @@ namespace Offeror.TelegramBot.Tests
             await command.InvokeAsync(update);
 
             Assert.NotNull(command.CommandState);
-            Assert.IsType<SetSearchState>(command.CommandState);
+            Assert.IsType<SearchInputState>(command.CommandState);
             Assert.Equal(currentState, command.CommandState);
         }
 
@@ -69,12 +69,12 @@ namespace Offeror.TelegramBot.Tests
         public async Task SetProfileState_ButtonRestart_StateRestart()
         {
             var client = new MockTelegramBotClient().CreateMockSendMessageRequest();
-            var currentState = new SetSearchState();
+            var currentState = new SearchInputState();
 
             var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
-                .AddService(new DisplayProfilesState(client.Object))
-                .AddService(new SetProfileState(null))
+                .AddService(new ProfileDisplayState(client.Object))
+                .AddService(new ProfileInputState(null))
                 .AddService(currentState)
                 .Builde();
 
@@ -87,7 +87,7 @@ namespace Offeror.TelegramBot.Tests
             await command.InvokeAsync(update);
 
             Assert.NotNull(command.CommandState);
-            Assert.IsType<SetProfileState>(command.CommandState);
+            Assert.IsType<ProfileInputState>(command.CommandState);
         }
     }
 }

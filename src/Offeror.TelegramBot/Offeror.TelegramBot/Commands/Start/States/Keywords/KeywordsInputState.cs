@@ -4,11 +4,11 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class SetKeywordsState : IState
+    public class KeywordsInputState : IState
     {
         private readonly ISearchFilterWriter _filter;
 
-        public SetKeywordsState(ISearchFilterWriter filter)
+        public KeywordsInputState(ISearchFilterWriter filter)
         {
             _filter = filter;
         }
@@ -19,7 +19,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             IState nextState = update?.Message?.Text switch
             {
-                Buttons.Back => states.GetState<DisplayRegionsState>(),
+                Buttons.Back => states.GetState<RegionDisplayState>(),
                 Buttons.Search => ButtonSearchHandler(states),
                 Buttons.Clear => ButtonClearKeywordsHandler(states),
 
@@ -32,19 +32,19 @@ namespace Offeror.TelegramBot.Commands.Start.States
         private IState ButtonSearchHandler(IStateContainer states)
         {
             /// TODO: Check if the search filter is full
-            return states.GetState<DisplaySearchState>();
+            return states.GetState<SearchDisplayState>();
         }
 
         private IState ButtonClearKeywordsHandler(IStateContainer states)
         {
             _filter.ClearKeyword();
-            return states.GetState<DisplayKeywordsState>();
+            return states.GetState<KeywordsDisplayState>();
         }
 
         private IState KeywordsHandler(IStateContainer states, string keywords)
         {
             _filter.AppendKeyword(keywords);
-            return states.GetState<DisplayKeywordsState>();
+            return states.GetState<KeywordsDisplayState>();
         }
     }
 }

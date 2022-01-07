@@ -5,11 +5,11 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class SetRegionState : IState
+    public class RegionInputState : IState
     {
         private readonly ISearchFilterWriter _filter;
 
-        public SetRegionState(ISearchFilterWriter filter)
+        public RegionInputState(ISearchFilterWriter filter)
         {
             _filter = filter;
         }
@@ -35,12 +35,12 @@ namespace Offeror.TelegramBot.Commands.Start.States
             _filter.SetProperty(
                 nameof(SearchFilter.Region), filter);
 
-            return states.GetState<DisplayKeywordsState>();
+            return states.GetState<KeywordsDisplayState>();
         }
 
         private IState ButtonBackHandler(IStateContainer states)
         {
-            return states.GetState<DisplayProfilesState>();
+            return states.GetState<ProfileDisplayState>();
         }
     }
 }

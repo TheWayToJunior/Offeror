@@ -6,11 +6,11 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class SetProfileState : IState
+    public class ProfileInputState : IState
     {
         private readonly ISearchFilterWriter _filter;
 
-        public SetProfileState(ISearchFilterWriter filter)
+        public ProfileInputState(ISearchFilterWriter filter)
         {
             _filter = filter;
         }
@@ -28,7 +28,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             };
 
             _filter.SetProperty(nameof(SearchFilter.Status), status);
-            IState nextState = states.GetState<DisplayRegionsState>();
+            IState nextState = states.GetState<RegionDisplayState>();
 
             await command.UpdateState(nextState).ExecuteAsync(command, update);
         }

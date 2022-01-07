@@ -12,7 +12,7 @@ namespace Offeror.TelegramBot.Commands
         public StartCommand(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider.CreateScope().ServiceProvider;
-            _defuildState = CommandState = GetState<DisplayProfilesState>();
+            _defuildState = CommandState = GetState<ProfileDisplayState>();
         }
 
         public event EventHandler<long>? CommandCompleted;

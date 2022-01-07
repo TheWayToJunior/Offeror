@@ -6,11 +6,11 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class DisplayProfilesState : IState
+    public class ProfileDisplayState : IState
     {
         private readonly ITelegramBotClient _client;
 
-        public DisplayProfilesState(ITelegramBotClient client)
+        public ProfileDisplayState(ITelegramBotClient client)
         {
             _client = client;
         }
@@ -32,7 +32,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await _client.SendTextMessageAsync(chatId, "Please indicate which status suits you",
                 replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(command.Cast<IStateContainer>().GetState<SetProfileState>());
+            command.UpdateState(command.Cast<IStateContainer>().GetState<ProfileInputState>());
         }
     }
 }

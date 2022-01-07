@@ -4,7 +4,7 @@ using Telegram.Bot.Types;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class SetSearchState : IState
+    public class SearchInputState : IState
     {
         public async Task ExecuteAsync(IBotCommand command, Update update)
         {
@@ -12,14 +12,14 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             IState nextState = update?.Message?.Text switch
             {
-                Buttons.Search => states.GetState<DisplaySearchState>(),
-                Buttons.Back => states.GetState<DisplayKeywordsState>(),
+                Buttons.Search => states.GetState<SearchDisplayState>(),
+                Buttons.Back => states.GetState<KeywordsDisplayState>(),
                 Buttons.Restart => command.Restart(),
 
                 _ => throw new CommandNotFoundException("There is no such answer option"),
             };
 
-            if(nextState is DisplaySearchState)
+            if(nextState is SearchDisplayState)
             {
                 command.UpdateState(nextState);
             }

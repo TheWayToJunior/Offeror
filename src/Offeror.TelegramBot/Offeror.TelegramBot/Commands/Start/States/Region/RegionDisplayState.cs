@@ -6,11 +6,11 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class DisplayRegionsState : IState
+    public class RegionDisplayState : IState
     {
         private readonly ITelegramBotClient _client;
 
-        public DisplayRegionsState(ITelegramBotClient client)
+        public RegionDisplayState(ITelegramBotClient client)
         {
             _client = client;
         }
@@ -31,8 +31,8 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             await _client.SendTextMessageAsync(chatId, "Specify the region to search for",
                 replyMarkup: ReplyKeyboardMarkup);
-
-            command.UpdateState(command.Cast<IStateContainer>().GetState<SetRegionState>());
+            
+            command.UpdateState(command.Cast<IStateContainer>().GetState<RegionInputState>());
         }
     }
 }

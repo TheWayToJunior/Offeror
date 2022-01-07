@@ -7,12 +7,12 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class DisplayKeywordsState : IState
+    public class KeywordsDisplayState : IState
     {
         private readonly ITelegramBotClient _client;
         private readonly ISearchFilterReader _filterReader;
 
-        public DisplayKeywordsState(ITelegramBotClient client, ISearchFilterReader searchFilter)
+        public KeywordsDisplayState(ITelegramBotClient client, ISearchFilterReader searchFilter)
         {
             _client = client;
             _filterReader = searchFilter;
@@ -42,7 +42,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             await _client.SendTextMessageAsync(chatId, message, replyMarkup: ReplyKeyboardMarkup);
 
-            command.UpdateState(command.Cast<IStateContainer>().GetState<SetKeywordsState>());
+            command.UpdateState(command.Cast<IStateContainer>().GetState<KeywordsInputState>());
         }
     }
 }

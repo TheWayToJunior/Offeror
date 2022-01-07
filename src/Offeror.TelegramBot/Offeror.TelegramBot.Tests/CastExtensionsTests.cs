@@ -40,7 +40,7 @@ namespace Offeror.TelegramBot.Tests
         {
             var serviceProviderBuilder = new MockServiceProvider();
             serviceProviderBuilder
-                .AddService(new DisplayProfilesState(null))
+                .AddService(new ProfileDisplayState(null))
                 .Builde();
 
             IBotCommand botCommand = new StartCommand(serviceProviderBuilder.GetResult());

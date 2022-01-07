@@ -9,13 +9,13 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Offeror.TelegramBot.Commands.Start.States
 {
-    public class DisplaySearchState : IState
+    public class SearchDisplayState : IState
     {
         private readonly ITelegramBotClient _client;
         private readonly ISearchFilterReader _filter;
         private readonly IMediator _mediator;
 
-        public DisplaySearchState(ITelegramBotClient client, ISearchFilterReader filter, IMediator mediator)
+        public SearchDisplayState(ITelegramBotClient client, ISearchFilterReader filter, IMediator mediator)
         {
             _client = client;
             _filter = filter;
@@ -50,7 +50,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await response.Cast<IAnnouncement>()
                 .AcceptAsync(new TelegramDisplayVisitor(_client, chatId, ReplyKeyboardMarkup));
 
-            command.UpdateState(command.Cast<IStateContainer>().GetState<SetSearchState>());
+            command.UpdateState(command.Cast<IStateContainer>().GetState<SearchInputState>());
         }
     }
 }
