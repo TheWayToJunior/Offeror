@@ -1,4 +1,5 @@
 ﻿using Offeror.TelegramBot.Contracts;
+using Offeror.TelegramBot.Extensions;
 using Offeror.TelegramBot.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -35,14 +36,8 @@ namespace Offeror.TelegramBot.Commands
                     throw;
                 }
 
-                long? chatId = update?.Message?.Chat.Id;
-
-                if (chatId is null)
-                {
-                    throw new ArgumentNullException(nameof(chatId), ex);
-                }
-
-                await notifiable.NotifyAsync(new TelegramNotifyExceptionVisitor(_client), chatId.Value);
+                long chatId = update.GetChatId();
+                await notifiable.NotifyAsync(new TelegramNotifyExceptionVisitor(_client), chatId);
             }
         }
 

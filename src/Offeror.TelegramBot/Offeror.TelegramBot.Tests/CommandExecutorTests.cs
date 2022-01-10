@@ -23,7 +23,7 @@ namespace Offeror.TelegramBot.Tests
                 .CreateMockSendMessageRequest();
 
             var mockProvider = new MockServiceProvider();
-            mockProvider.AddService(mockClient.Object).Builde();
+            mockProvider.AddService(mockClient.Object).Build();
 
             var commands = new CommandExecutor(mockProvider.GetResult());
 

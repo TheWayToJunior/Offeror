@@ -63,6 +63,7 @@ namespace Offeror.TelegramBot.Models
             builder.Append($"Skils: {string.Join(", ", vacancy.KeySkills)}\n");
 
             builder.Append('\n');
+            builder.Append($"We Offer: {vacancy.Description}\n");
             builder.Append($"Link: {vacancy.Link}\n");
 
             await _client.SendTextMessageAsync(ChatId, builder.ToString(), replyMarkup: Markup);

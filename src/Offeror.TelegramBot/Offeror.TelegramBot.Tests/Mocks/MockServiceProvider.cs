@@ -13,7 +13,7 @@ namespace Offeror.TelegramBot.Tests.Mocks
             _serviceProvider = new();
         }
 
-        public MockServiceProvider Builde()
+        public MockServiceProvider Build()
         {
             var serviceScope = new Mock<IServiceScope>();
             serviceScope.Setup(x => x.ServiceProvider).Returns(_serviceProvider.Object);

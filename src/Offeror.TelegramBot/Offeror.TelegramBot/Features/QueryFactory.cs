@@ -13,12 +13,13 @@ namespace Offeror.TelegramBot.Features
                 Requests.Resume => new GetResumeQuery() 
                 {
                     Region = filter.Region, 
-                    Keywords = string.Join(" ", filter.Keywords),
+                    Keywords = new List<string>(filter.Keywords),
                 },
 
                 Requests.Vacancy => new GetVacancyQuery() 
                 { 
-                    Region = filter.Region 
+                    Region = filter.Region,
+                    Keywords = new List<string>(filter.Keywords),
                 },
 
                 _ => throw new ArgumentException("Failed to create request")

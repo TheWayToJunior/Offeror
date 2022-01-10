@@ -6,6 +6,6 @@ namespace Offeror.TelegramBot.Features.Resume
     {
         public string Region { get; set; }
 
-        public string Keywords { get; set; }
+        public IEnumerable<string> Keywords { get; set; }
     }
 }

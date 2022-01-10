@@ -85,8 +85,11 @@ namespace Offeror.TelegramBot.Commands
         private IEnumerable<KeyValuePair<long, IBotCommand>> ClearOutdatedCommands()
         {
             /// TODO: Take out in the project configuration
+#if DEBUG
+            TimeSpan commandsLifetime = TimeSpan.FromMinutes(5);
+#else
             TimeSpan commandsLifetime = TimeSpan.FromMinutes(20);
-
+#endif
             var expiredCommands = _usersCommands.Where(key => DateTime.Now - key.Value.CommandStartTime >= commandsLifetime);
 
             foreach (var item in expiredCommands)

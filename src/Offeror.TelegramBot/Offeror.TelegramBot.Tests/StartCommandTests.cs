@@ -22,7 +22,7 @@ namespace Offeror.TelegramBot.Tests
             serviceProviderBuilder
                 .AddService(new ProfileDisplayState(client.Object))
                 .AddService(new ProfileInputState(null))
-                .Builde();
+                .Build();
 
             var command = new StartCommand(serviceProviderBuilder.GetResult());
             Update update = UpdateFactory.CreateUpdate(1, "Test");
@@ -50,7 +50,7 @@ namespace Offeror.TelegramBot.Tests
                 .AddService(new ProfileDisplayState(null))
                 .AddService(new SearchDisplayState(null, reader.Object, mediator.Object))
                 .AddService(currentState)
-                .Builde();
+                .Build();
 
             var command = new StartCommand(serviceProviderBuilder.GetResult());
             command.UpdateState(currentState);
@@ -76,7 +76,7 @@ namespace Offeror.TelegramBot.Tests
                 .AddService(new ProfileDisplayState(client.Object))
                 .AddService(new ProfileInputState(null))
                 .AddService(currentState)
-                .Builde();
+                .Build();
 
             var command = new StartCommand(serviceProviderBuilder.GetResult());
             command.UpdateState(currentState);

@@ -24,8 +24,11 @@ namespace Offeror.TelegramBot.BackgroundServices
             _logger.LogInformation("Command Cleaner Hosted Service running.");
 
             /// TODO: Set the launch interval in the project configuration
+#if DEBUG
+            TimeSpan interval = TimeSpan.FromMinutes(2);
+#else
             TimeSpan interval = TimeSpan.FromMinutes(10);
-
+#endif
             _timer = new Timer((state) => _executingTask = ExecuteTaskAsync(_tokenSource.Token),
                 null, dueTime: interval, period: interval);
 
