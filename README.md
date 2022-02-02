@@ -1,1 +1,1 @@
-# Offeror.TelegramBot
+# Offeror
