@@ -20,7 +20,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             IState nextState = update?.Message?.Text switch
             {
                 Buttons.Back => states.GetState<RegionDisplayState>(),
-                Buttons.Search => ButtonSearchHandler(states),
+                Buttons.Search => ButtonSearchHandle(states),
                 Buttons.Clear => ButtonClearKeywordsHandle(states),
 
                 _ => KeywordsHandle(states, update.GetTextMessage()),
@@ -29,7 +29,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await command.UpdateState(nextState).ExecuteAsync(command, update);
         }
 
-        private IState ButtonSearchHandler(IStateContainer states)
+        private IState ButtonSearchHandle(IStateContainer states)
         {
             /// TODO: Check if the search filter is full
             return states.GetState<SearchDisplayState>();
