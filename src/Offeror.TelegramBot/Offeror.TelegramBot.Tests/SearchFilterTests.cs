@@ -8,7 +8,7 @@ namespace Offeror.TelegramBot.Tests
         [Fact]
         public void SearchFilterBuilder_CreateSearchFilter()
         {
-            SearchFilter.SearchFilterBuilder builder = new();
+            SearchFilter.Builder builder = new();
 
             builder.SetProperty(nameof(SearchFilter.Region), "rus");
             builder.SetProperty(nameof(SearchFilter.Status), "company");

@@ -20,9 +20,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
 
             IState nextState = update?.Message?.Text switch
             {
-                Buttons.Russia  => ButtonNextHandler(states, "rus"),
-                Buttons.Ukraine => ButtonNextHandler(states, "ukr"),
-                Buttons.Back    => ButtonBackHandler(states),
+                Buttons.Russia  => ButtonNexHandle(states, "rus"),
+                Buttons.Ukraine => ButtonNexHandle(states, "ukr"),
+                Buttons.Back    => ButtonBackHandle(states),
 
                 _ => throw new CommandNotFoundException("There is no such answer option"),
             };
@@ -30,7 +30,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             await command.UpdateState(nextState).ExecuteAsync(command, update);
         }
 
-        private IState ButtonNextHandler(IStateContainer states, string filter)
+        private IState ButtonNexHandle(IStateContainer states, string filter)
         {
             _filter.SetProperty(
                 nameof(SearchFilter.Region), filter);
@@ -38,7 +38,7 @@ namespace Offeror.TelegramBot.Commands.Start.States
             return states.GetState<KeywordsDisplayState>();
         }
 
-        private IState ButtonBackHandler(IStateContainer states)
+        private IState ButtonBackHandle(IStateContainer states)
         {
             return states.GetState<ProfileDisplayState>();
         }

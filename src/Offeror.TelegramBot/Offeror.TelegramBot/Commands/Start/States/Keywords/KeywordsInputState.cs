@@ -21,9 +21,9 @@ namespace Offeror.TelegramBot.Commands.Start.States
             {
                 Buttons.Back => states.GetState<RegionDisplayState>(),
                 Buttons.Search => ButtonSearchHandler(states),
-                Buttons.Clear => ButtonClearKeywordsHandler(states),
+                Buttons.Clear => ButtonClearKeywordsHandle(states),
 
-                _ => KeywordsHandler(states, update.GetTextMessage()),
+                _ => KeywordsHandle(states, update.GetTextMessage()),
             };
 
             await command.UpdateState(nextState).ExecuteAsync(command, update);
@@ -35,13 +35,13 @@ namespace Offeror.TelegramBot.Commands.Start.States
             return states.GetState<SearchDisplayState>();
         }
 
-        private IState ButtonClearKeywordsHandler(IStateContainer states)
+        private IState ButtonClearKeywordsHandle(IStateContainer states)
         {
             _filter.ClearKeyword();
             return states.GetState<KeywordsDisplayState>();
         }
 
-        private IState KeywordsHandler(IStateContainer states, string keywords)
+        private IState KeywordsHandle(IStateContainer states, string keywords)
         {
             _filter.AppendKeyword(keywords);
             return states.GetState<KeywordsDisplayState>();

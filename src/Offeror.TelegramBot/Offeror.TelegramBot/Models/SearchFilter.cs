@@ -15,11 +15,11 @@ namespace Offeror.TelegramBot.Models
         public ICollection<string> Keywords { get; set; }
 
         /// The class is nested to be able to create Search Filter instances with a private constructor
-        public class SearchFilterBuilder : ISearchFilterBuilder
+        public class Builder : ISearchFilterBuilder
         {
             private readonly SearchFilter _filter;
 
-            public SearchFilterBuilder()
+            public Builder()
             {
                 _filter = new SearchFilter() 
                 {

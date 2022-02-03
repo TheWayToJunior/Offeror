@@ -38,7 +38,7 @@ namespace Offeror.TelegramBot
 
         internal static IServiceCollection AddBotSearchFilter(this IServiceCollection services)
         {
-            return services.AddScoped<ISearchFilterBuilder, SearchFilter.SearchFilterBuilder>()
+            return services.AddScoped<ISearchFilterBuilder, SearchFilter.Builder>()
                 .AddScoped<ISearchFilterWriter>(p => p.GetRequiredService<ISearchFilterBuilder>())
                 .AddScoped<ISearchFilterReader>(p => p.GetRequiredService<ISearchFilterBuilder>());
         }
