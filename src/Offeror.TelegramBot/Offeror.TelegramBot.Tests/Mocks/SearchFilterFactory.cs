@@ -6,7 +6,7 @@ namespace Offeror.TelegramBot.Tests.Mocks
     {
         public static SearchFilter CreateSearchFilter<T>(string prop, T value)
         {
-            var builder = new SearchFilter.SearchFilterBuilder();
+            var builder = new SearchFilter.Builder();
             builder.SetProperty(prop, value);
 
             return builder.GetFilter();
